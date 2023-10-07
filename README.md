@@ -36,7 +36,7 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Changelog
+## Changelogs
 
 ### [1.0.0] - 2023-05-10
 - Initial release of the project
@@ -44,5 +44,8 @@ Currently, two official plugins are available:
 - Styled Components for styling
 - Material UI for UI components
 - Vite for fast development and HMR
+### [1.1.0] - 2023-07-10
+- Added Board Bar Menu, App Bar Menu
+- Installed vite-plugin-svgr library
 
 <!--- DOCUMENTATION ENDS HERE -->
