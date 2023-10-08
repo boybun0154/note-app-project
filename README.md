@@ -47,5 +47,6 @@ Currently, two official plugins are available:
 ### [1.1.0] - 2023-07-10
 - Added Board Bar Menu, App Bar Menu
 - Installed vite-plugin-svgr library
+'dsajdoisajkp[]
 
 <!--- DOCUMENTATION ENDS HERE -->
