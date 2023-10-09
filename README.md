@@ -1,49 +1,51 @@
-### Bộ code base để bắt đầu học khóa MERN Stack Pro (HỌC PHẦN FRONT-END: REACTJS - MATERIAL UI - REDUX...vv) - Lập Trình qua dự án thực tế Trello Clone trên YouTube của mình nhé các bạn!
-### Base project for my MERN Stack Pro Course - Build Trello App on YouTube!
+<!--- DOCUMENTATION STARTS HERE -->
+# Trello-Clone App
 
-- Link Download Full Source Code hoàn chỉnh của bộ này và ủng hộ mình: (Sắp có...)
+This is a Trello-Clone app built using React and Vite. It allows users to create boards, lists, and cards to organize their tasks and projects.
 
-- Link YouTube Playlist: https://www.youtube.com/playlist?list=PLP6tw4Zpj-RJP2-YrhtkWqObMQ-AA4TDy
+## Features
 
-### Hướng dẫn clone Repo code này về máy các bạn chuẩn nhất ở đây nhé:
+- Create and delete boards
+- Add and remove lists within a board
+- Add and remove cards within a list
+- Drag and drop cards between lists
+- Edit board, list, and card titles
 
-- Link: https://youtu.be/lUfsTj45Uys
+## Installation
 
-### Requirements - Thông tin của bộ Code Base này - Chuẩn các phiên bản dưới đây để bắt đầu học: (Semantic Versioning)
+1. Clone the repository
+2. Install dependencies using `npm install` / `yarn install`
+3. Start the development server using `npm run dev` / `yarn dev`
 
-```
-* nodejs = v18.16.0
-* npm = v9.5.1
-* yarn = v1.22.19
+## Technologies Used
 
-* "react": "^18.2.0"
-* "react-dom": "^18.2.0"
-* "@types/react": "^18.0.28"
-* "@types/react-dom": "^18.0.11"
+- React
+- Vite
+- React DnD
+- React Beautiful DnD
+- React Router
+- Styled Components
+- Material UI
 
-* "vite": "^4.3.2"
-* "@vitejs/plugin-react-swc": "^3.0.0"
+## React + Vite
 
-* "eslint": "^8.38.0"
-* "eslint-plugin-react": "^7.32.2"
-* "eslint-plugin-react-hooks": "^4.6.0"
-* "eslint-plugin-react-refresh": "^0.3.4"
-```
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-### About Me - Thông tin về mình:
+Currently, two official plugins are available:
 
-Author: **Trungquandev - Một Lập Trình Viên** & **CodeTQ**
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-Blog: https://trungquandev.com/
+## Changelogs
 
-CV: https://cv.trungquandev.com/
+### [1.0.0] - 2023-05-10
+- Initial release of the project
+- React Router for client-side routing
+- Styled Components for styling
+- Material UI for UI components
+- Vite for fast development and HMR
+### [1.1.0] - 2023-07-10
+- Added Board Bar Menu, App Bar Menu
+- Installed vite-plugin-svgr library
 
-YouTube 01 (Trungquandev - Một Lập Trình Viên): https://www.youtube.com/@trungquandev
-
-YouTube 02 (CodeTQ): https://www.youtube.com/@code-tq
-
-"Learning new everyday not the copycat of yesterday!"
-
-"A bit of fragrance clings to the hand that gives flowers!"
-
-Thanks for watching!
+<!--- DOCUMENTATION ENDS HERE -->
