@@ -2,15 +2,14 @@ import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import Column from "./Column/Column";
 import QueueIcon from "@mui/icons-material/Queue";
-function ListColumns() {
+
+function ListColumns({ columns }) {
   return (
     <Box
       sx={{
         bgcolor: "inherit",
         width: "100%",
         height: "100%",
-        m: "0 5px",
-        p: "0 5px",
         display: "flex",
         overflowX: "auto",
         overflowY: "hidden",
@@ -19,8 +18,10 @@ function ListColumns() {
         },
       }}
     >
-      <Column />
-      <Column />
+      {columns?.map((column) => (
+        <Column key={column._id} column={column} />
+      ))}
+
       <Box
         sx={{
           minWidth: "200px",
@@ -31,7 +32,6 @@ function ListColumns() {
           bgcolor: "#ffffff3d",
         }}
       >
-
         {/* Add New Column */}
         <Button
           startIcon={<QueueIcon />}
