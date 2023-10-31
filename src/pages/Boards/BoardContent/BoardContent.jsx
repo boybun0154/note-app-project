@@ -4,6 +4,9 @@ import { mapOrder } from "~/utils/sorts";
 import { mockData } from "~/apis/mock-data";
 
 function BoardContent({ board }) {
+  if (!board || !board.columns) {
+    return <div>No data available</div>;
+  }
   const orderedColumns = mapOrder(board.columns, board.columnOrderIds, "_id");
   return (
     <Box
