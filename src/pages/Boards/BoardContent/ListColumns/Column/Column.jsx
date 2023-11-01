@@ -6,46 +6,62 @@ import {
   Menu,
   MenuItem,
   Typography,
-  Tooltip,
-} from "@mui/material";
-import Box from "@mui/material/Box";
-import { useState } from "react";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+  Tooltip
+} from '@mui/material'
+import Box from '@mui/material/Box'
+import { useState } from 'react'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import {
   Cloud,
   ContentCopy,
   ContentCut,
-  ContentPaste,
-} from "@mui/icons-material";
-import AddCardIcon from "@mui/icons-material/AddCard";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import DragHandleIcon from "@mui/icons-material/DragHandle";
-import ListCards from "./ListCards/ListCards";
-import { mapOrder } from "~/utils/sorts";
+  ContentPaste
+} from '@mui/icons-material'
+import AddCardIcon from '@mui/icons-material/AddCard'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import DragHandleIcon from '@mui/icons-material/DragHandle'
+import ListCards from './ListCards/ListCards'
+import { mapOrder } from '~/utils/sorts'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 
 function Column({ column }) {
-  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, "_id");
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
+    id: column._id,
+    data: { ...column }
+  })
+  const dndKitColumnStyles = {
+    // touchAction: 'none',
+    transform: CSS.Translate.toString(transform),
+    transition
+  }
+
+  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
+  const [anchorEl, setAnchorEl] = useState(null)
+  const open = Boolean(anchorEl)
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
   return (
     <Box
+      ref={setNodeRef}
+      style={dndKitColumnStyles}
+      {...attributes}
+      {...listeners}
       sx={{
-        minWidth: "300px",
-        maxWidth: "300px",
+        minWidth: '300px',
+        maxWidth: '300px',
         bgcolor: (theme) =>
-          theme.palette.mode === "dark" ? "#333643" : "#ebecf0",
+          theme.palette.mode === 'dark' ? '#333643' : '#ebecf0',
         ml: 2,
-        borderRadius: "6px",
-        height: "fit-content",
+        borderRadius: '6px',
+        height: 'fit-content',
         maxHeight: (theme) =>
-          `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`,
+          `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`
       }}
     >
       {/* Box Column Header */}
@@ -53,17 +69,17 @@ function Column({ column }) {
         sx={{
           height: (theme) => theme.trello.columnHeaderHeight,
           p: 2,
-          display: "flex",
-          alignItemts: "center",
-          justifyContent: "space-between",
+          display: 'flex',
+          alignItemts: 'center',
+          justifyContent: 'space-between'
         }}
       >
         <Typography
           variant="h6"
           sx={{
-            fontSize: "1rem",
-            fontWeight: "bold",
-            cursor: "pointer",
+            fontSize: '1rem',
+            fontWeight: 'bold',
+            cursor: 'pointer'
           }}
         >
           {column?.title}
@@ -71,11 +87,11 @@ function Column({ column }) {
         <Box>
           <Tooltip title="More options">
             <ExpandMoreIcon
-              sx={{ color: "text.primary", cursor: "pointer" }}
+              sx={{ color: 'text.primary', cursor: 'pointer' }}
               id="basic-column-dropdown"
-              aria-controls={open ? "basic-menu-column-dropdown" : undefined}
+              aria-controls={open ? 'basic-menu-column-dropdown' : undefined}
               aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
+              aria-expanded={open ? 'true' : undefined}
               onClick={handleClick}
             />
           </Tooltip>
@@ -85,7 +101,7 @@ function Column({ column }) {
             open={open}
             onClose={handleClose}
             MenuListProps={{
-              "aria-labelledby": "basic-column-dropdown",
+              'aria-labelledby': 'basic-column-dropdown'
             }}
           >
             <MenuItem>
@@ -136,22 +152,22 @@ function Column({ column }) {
         sx={{
           height: (theme) => theme.trello.columnFooterHeight,
           p: 2,
-          display: "flex",
-          alignItemts: "center",
-          justifyContent: "space-between",
+          display: 'flex',
+          alignItemts: 'center',
+          justifyContent: 'space-between'
         }}
       >
         <Button startIcon={<AddCardIcon />}> Add new card</Button>
         <Tooltip title="Drag to move">
           <DragHandleIcon
             sx={{
-              cursor: "pointer",
+              cursor: 'pointer'
             }}
           />
         </Tooltip>
       </Box>
     </Box>
-  );
+  )
 }
 
-export default Column;
+export default Column

@@ -10,6 +10,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import Paper from '@mui/material/Paper'
+import { useState } from 'react'
 
 function Copyright(props) {
   return (
@@ -24,15 +25,41 @@ function Copyright(props) {
   )
 }
 
+const validate = (email, password) => {
+  const errors = {}
+
+  if (!email) {
+    errors.email = 'Email is required'
+  } else if (!/\S+@\S+\.\S+/.test(email)) {
+    errors.email = 'Email is invalid'
+  }
+
+  if (!password) {
+    errors.password = 'Password is required'
+  } else if (password.length < 6) {
+    errors.password = 'Password must be 6 characters or more'
+  }
+
+  return errors
+}
 
 export default function SignIn() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [errors, setErrors] = useState({})
+
   const handleSubmit = (event) => {
     event.preventDefault()
-    // const data = new FormData(event.currentTarget)
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password')
-    // })
+    const errors = validate(email, password)
+    setErrors(errors)
+    if (Object.keys(errors).length === 0) {
+      // submit the form
+      // const data = new FormData(event.currentTarget)
+      // console.log({
+      //   email: data.get('email'),
+      //   password: data.get('password')
+      // })
+    }
   }
 
   return (
@@ -71,6 +98,10 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              error={!!errors.email}
+              helperText={errors.email}
             />
             <TextField
               margin="normal"
@@ -81,6 +112,10 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              error={!!errors.password}
+              helperText={errors.password}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

@@ -1,53 +1,56 @@
-import { Button } from "@mui/material";
-import Box from "@mui/material/Box";
-import Column from "./Column/Column";
-import QueueIcon from "@mui/icons-material/Queue";
+import { Button } from '@mui/material'
+import Box from '@mui/material/Box'
+import Column from './Column/Column'
+import QueueIcon from '@mui/icons-material/Queue'
+import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
 
 function ListColumns({ columns }) {
   return (
-    <Box
-      sx={{
-        bgcolor: "inherit",
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        overflowX: "auto",
-        overflowY: "hidden",
-        "&::-webkit-scrollbar-track": {
-          m: 2,
-        },
-      }}
-    >
-      {columns?.map((column) => (
-        <Column key={column._id} column={column} />
-      ))}
-
+    <SortableContext items={columns?.map(c => c._id)} strategy={horizontalListSortingStrategy}>
       <Box
         sx={{
-          minWidth: "200px",
-          maxWidth: "200px",
-          mx: 2,
-          borderRadius: "6px",
-          height: "fit-content",
-          bgcolor: "#ffffff3d",
+          bgcolor: 'inherit',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          overflowX: 'auto',
+          overflowY: 'hidden',
+          '&::-webkit-scrollbar-track': {
+            m: 2
+          }
         }}
       >
-        {/* Add New Column */}
-        <Button
-          startIcon={<QueueIcon />}
+        {columns?.map((column) => (
+          <Column key={column._id} column={column} />
+        ))}
+
+        <Box
           sx={{
-            color: "white",
-            width: "100%",
-            justifyContent: "flex-start",
-            pl: 2.5,
-            py: 1,
+            minWidth: '200px',
+            maxWidth: '200px',
+            mx: 2,
+            borderRadius: '6px',
+            height: 'fit-content',
+            bgcolor: '#ffffff3d'
           }}
         >
-          Add New Column
-        </Button>
+          {/* Add New Column */}
+          <Button
+            startIcon={<QueueIcon />}
+            sx={{
+              color: 'white',
+              width: '100%',
+              justifyContent: 'flex-start',
+              pl: 2.5,
+              py: 1
+            }}
+          >
+            Add New Column
+          </Button>
+        </Box>
       </Box>
-    </Box>
-  );
+    </SortableContext>
+  )
 }
 
-export default ListColumns;
+export default ListColumns
