@@ -8,6 +8,17 @@ import { useState, useEffect } from 'react'
 
 function Board() {
   const [board, setBoard] = useState(null)
+  const handleBoardChange = (newBoard) => {
+    const boardId = '6541f84c9e88cea5044a321e';
+    fetchBoardDetailsAPI(boardId)
+      .then(board => {
+        console.log('card change:', board); // Log the received board data
+        setBoard(board);
+      })
+      .catch(error => {
+        console.error('Error fetching board data:', error); // Log any errors
+      });
+  }
 
   useEffect(() => {
     console.log('Fetching board data...'); // Log when fetching starts
@@ -31,7 +42,7 @@ function Board() {
     <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
       <Appbar />
       <BoardBar board = {board}/>
-      <BoardContent board = {board} />
+      <BoardContent board = {board} onBoardChange={handleBoardChange} />
     </Container>
   )
 }

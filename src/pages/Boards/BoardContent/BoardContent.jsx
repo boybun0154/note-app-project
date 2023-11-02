@@ -2,8 +2,9 @@ import { Box } from "@mui/material";
 import ListColumns from "./ListColumns/ListColumns";
 import { mapOrder } from "~/utils/sorts";
 import { mockData } from "~/apis/mock-data";
+import { useState } from "react";
 
-function BoardContent({ board }) {
+function BoardContent({ board, onBoardChange }) {
   if (!board) {
     return null;
   }
@@ -18,7 +19,7 @@ function BoardContent({ board }) {
         p: "10px 0",
       }}
     >
-      <ListColumns columns={orderedColumns} />
+      <ListColumns board={board} columns={orderedColumns} onColumnChange={onBoardChange} onCardChange={onBoardChange}/>
     </Box>
   );
 }

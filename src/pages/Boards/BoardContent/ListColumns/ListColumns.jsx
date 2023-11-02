@@ -3,25 +3,77 @@ import Box from "@mui/material/Box";
 import Column from "./Column/Column";
 import QueueIcon from "@mui/icons-material/Queue";
 import { createNewColumn } from "~/apis";
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import TextField from '@mui/material/TextField'
 import CloseIcon from '@mui/icons-material/Close'
+import { toast } from 'react-toastify'
 
-function ListColumns({ columns }) {
+function ListColumns({ columns, board, onColumnChange, onCardChange }) {
+  const [columnState, setColumnState] = useState([])
+  const [boardState, setBoardState] = useState([])
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
-  const [newColumnTitle, setNewColumnTitle] = useState('');
+  const [newColumnTitle, setNewColumnTitle] = useState('')
+  const onNewColumnTitleChange = useCallback((e) => setNewColumnTitle(e.target.value), [])
+
+  const newColumnInputRef = useRef(null)
 
   const addNewColumn = () => {
     if (!newColumnTitle) {
-      // newColumnInputRef.current.focus()
-      // return
+      toast.error("Please enter Column Title!")
+      return
     }
+
+    const newColumnToAdd = {
+      boardId: board._id,
+      title: newColumnTitle.trim(),
+      cardOrder: [],
+      cards: []
+    }
+
+    createNewColumn(newColumnToAdd).then(column => {
+      let newColumns = [...columns]
+      newColumns.push(column)
+
+      let newBoard = { ...board }
+      newBoard.columnOrder = newColumns.map(c => c._id)
+      newBoard.columns = newColumns
+
+      setColumnState(newColumns)
+      setBoardState(newBoard)
+      setNewColumnTitle('')
+      toggleOpenNewColumnForm()
+      
+      // Call the callback function
+      console.log("newBoard: " + newBoard)
+      onColumnChange(newBoard)
+    })
     // console.log(newColumnTitle)
     // Goi API o day
 
     // Đóng lại trạng thái thêm Column mới & Clear Input
     toggleOpenNewColumnForm()
     setNewColumnTitle('')
+  }
+
+  const onUpdateColumn = (newColumnToUpdate) => {
+    const columnIdToUpdate = newColumnToUpdate._id
+
+    let newColumns = [...columns]
+    const columnIndexToUpdate = newColumns.findIndex(i => i._id === columnIdToUpdate)
+
+    if (newColumnToUpdate._destroy) {
+      // remove column
+      newColumns.splice(columnIndexToUpdate, 1)
+    } else {
+      newColumns.splice(columnIndexToUpdate, 1, newColumnToUpdate)
+    }
+
+    let newBoard = { ...board }
+    newBoard.columnOrder = newColumns.map(c => c._id)
+    newBoard.columns = newColumns
+
+    setColumnState(newColumns)
+    setBoardState(newBoard)
   }
 
   const toggleOpenNewColumnForm = () => setOpenNewColumnForm(!openNewColumnForm)
@@ -41,7 +93,7 @@ function ListColumns({ columns }) {
       }}
     >
       {columns?.map((column) => (
-        <Column key={column._id} column={column} />
+        <Column key={column._id} column={column} board={board} onUpdateColumn={onUpdateColumn} onCardChange={onCardChange}/>
       ))}
       {!openNewColumnForm
         ? <Box onClick={toggleOpenNewColumnForm}

@@ -9,7 +9,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import Box from "@mui/material/Box";
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Cloud,
@@ -24,8 +24,11 @@ import ListCards from "./ListCards/ListCards";
 import { mapOrder } from "~/utils/sorts";
 import TextField from '@mui/material/TextField'
 import CloseIcon from '@mui/icons-material/Close'
+import { createNewCard } from "~/apis";
+import { cloneDeep } from "lodash";
+import { toast } from 'react-toastify'
 
-function Column({ column }) {
+function Column({ column, board, onUpdateColumn, onCardChange }) {
 
   const [openNewCardForm, setOpenNewCardForm] = useState(false)
   const [newCardTitle, setNewCardTitle] = useState('');
@@ -41,11 +44,26 @@ function Column({ column }) {
 
   const addNewCard = () => {
     if (!newCardTitle) {
-      // newCardInputRef.current.focus()
-      // return
+      toast.error("Please enter Card Title!", { position: "bottom-right"})
+      newCardInputRef.current.focus()
+      return
     }
     // console.log(newCardTitle)
     // Goi API o day
+
+    const newCardToAdd = {
+      boardId: board._id,
+      columnId: column._id,
+      title: newCardTitle.trim()
+    }
+
+    createNewCard(newCardToAdd).then(card => {
+      let newColumns = cloneDeep(column)
+      newColumns.cards.push(card)
+
+      onUpdateColumn(newColumns)
+      onCardChange(newColumns)
+    })
 
     // Đóng lại trạng thái thêm Card mới & Clear Input
     toggleOpenNewCardForm()
