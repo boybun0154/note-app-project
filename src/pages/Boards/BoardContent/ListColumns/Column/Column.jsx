@@ -84,7 +84,7 @@ function Column({ column, board, onUpdateColumn, onCardChange }) {
       title: changeColumnTitle
     }
 
-    updateColumn(column._id, newColumnTitle).then((updatedTitle) => {
+    updateColumn(column._id, newColumnTitle).then(() => {
       // Assuming updatedTitle is the response from the API containing the updated title
       let newColumns = cloneDeep(column);
       
@@ -93,6 +93,20 @@ function Column({ column, board, onUpdateColumn, onCardChange }) {
 
     // Đóng lại trạng thái thêm Card mới & Clear Input
     toggleOpenChangeColumnTitle()
+    setChangeColumnTitle('')
+  }
+
+  const deleteColumn = () => {
+
+    const destroyColumn = {
+      _destroy: "true"
+    }
+
+    updateColumn(column._id, destroyColumn).then(() => {
+      let newColumns = cloneDeep(column);
+      
+      onCardChange(newColumns);
+    });
     setChangeColumnTitle('')
   }
   //Update column title
@@ -261,7 +275,7 @@ function Column({ column, board, onUpdateColumn, onCardChange }) {
               </ListItemIcon>
               <ListItemText>Archive this column</ListItemText>
             </MenuItem>
-            <MenuItem>
+            <MenuItem onClick={() => deleteColumn()}>
               <ListItemIcon>
                 <DeleteForeverIcon fonSize="small" />
               </ListItemIcon>
