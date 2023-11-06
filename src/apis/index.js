@@ -28,3 +28,8 @@ export const createNewCard = async (data) => {
   )
   return request.data
 }
+
+export const updateColumn = async (id, data) => {
+  const request = await axios.put(`${API_ROOT}/v1/lists/${id}`, data)
+  return request.data
+}
