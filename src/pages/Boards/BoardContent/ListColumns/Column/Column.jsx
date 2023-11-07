@@ -8,6 +8,12 @@ import {
   Typography,
   Tooltip,
 } from "@mui/material";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 import Box from "@mui/material/Box";
 import { useState, useRef, useCallback } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -29,7 +35,7 @@ import { cloneDeep } from "lodash";
 import { toast } from 'react-toastify'
 
 function Column({ column, board, onUpdateColumn, onCardChange }) {
-
+  const [openDialog, setOpenDialog] = useState(false);
   const [openNewCardForm, setOpenNewCardForm] = useState(false)
   const [openChangeColumnTitle, setOpenChangeColumnTitle] = useState(false)
   const [changeColumnTitle, setChangeColumnTitle] = useState('')
@@ -43,6 +49,15 @@ function Column({ column, board, onUpdateColumn, onCardChange }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  function openDeleteColumnDialog() {
+    setOpenDialog(true);
+  }
+
+  function handleCloseDialog() {
+    setOpenDialog(false);
+  }
+
 
   const addNewCard = () => {
     if (!newCardTitle) {
@@ -87,7 +102,7 @@ function Column({ column, board, onUpdateColumn, onCardChange }) {
     updateColumn(column._id, newColumnTitle).then(() => {
       // Assuming updatedTitle is the response from the API containing the updated title
       let newColumns = cloneDeep(column);
-      
+
       onCardChange(newColumns);
     });
 
@@ -104,7 +119,7 @@ function Column({ column, board, onUpdateColumn, onCardChange }) {
 
     updateColumn(column._id, destroyColumn).then(() => {
       let newColumns = cloneDeep(column);
-      
+
       onCardChange(newColumns);
     });
     setChangeColumnTitle('')
@@ -238,7 +253,7 @@ function Column({ column, board, onUpdateColumn, onCardChange }) {
               "aria-labelledby": "basic-column-dropdown",
             }}
           >
-          <MenuItem onClick={() => { toggleOpenNewCardForm(); handleClose(); }} >
+            <MenuItem onClick={() => { toggleOpenNewCardForm(); handleClose(); }} >
               <ListItemIcon>
                 <AddCardIcon fontSize="small" />
               </ListItemIcon>
@@ -275,9 +290,9 @@ function Column({ column, board, onUpdateColumn, onCardChange }) {
               </ListItemIcon>
               <ListItemText>Archive this column</ListItemText>
             </MenuItem>
-            <MenuItem onClick={() => deleteColumn()}>
+            <MenuItem onClick={openDeleteColumnDialog}>
               <ListItemIcon>
-                <DeleteForeverIcon fonSize="small" />
+                <DeleteForeverIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText>Remove this column</ListItemText>
             </MenuItem>
@@ -371,6 +386,23 @@ function Column({ column, board, onUpdateColumn, onCardChange }) {
 
 
       </Box>
+      {/* Confirmation Dialog */}
+      <Dialog open={openDialog} onClose={handleCloseDialog}>
+        <DialogTitle>Are you sure you want to delete column "{column.title}"?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Deleting this column will remove all associated cards. This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={deleteColumn} color="primary" variant="contained">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }
