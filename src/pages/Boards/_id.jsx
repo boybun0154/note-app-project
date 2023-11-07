@@ -7,26 +7,42 @@ import { fetchBoardDetailsAPI } from '~/apis'
 import { useState, useEffect } from 'react'
 
 function Board() {
-  const [board, setBoard] = useState(null)
+  const [board, setBoard] = useState('')
+  const handleBoardChange = (newBoard) => {
+    const boardId = '654a0f2acffe02fea16afe42';
+    fetchBoardDetailsAPI(boardId)
+      .then(board => {
+        console.log('card change:', board); // Log the received board data
+        setBoard(board);
+      })
+      .catch(error => {
+        console.error('Error fetching board data:', error); // Log any errors
+      });
+  }
 
   useEffect(() => {
-    // console.log('Fetching board data...') // Log when fetching starts
-    const boardId = '653a09df6774aca7178c8bdd'
-    // console.log(boardId)
-    fetchBoardDetailsAPI(boardId).then(board => {
-      // console.log('Board data received:', board) // Log the received board data
-      setBoard(board)
-    })
-    // .catch(error => {
-    //   console.error('Error fetching board data:', error) // Log any errors
-    // })
-  }, [])
+    console.log('Fetching board data...'); // Log when fetching starts
+    const boardId = '654a0f2acffe02fea16afe42';
+    console.log(boardId)
+    fetchBoardDetailsAPI(boardId)
+      .then(board => {
+        console.log('Board data received:', board); // Log the received board data
+        setBoard(board);
+      })
+      .catch(error => {
+        console.error('Error fetching board data:', error); // Log any errors
+      });
+  
+    return () => {
+      console.log('Cleanup or cancellation logic (if needed)...');
+    };
+  }, []); // Empty dependency array means this effect runs once after the initial render
 
   return (
     <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
       <Appbar />
       <BoardBar board = {board}/>
-      <BoardContent board = {board} />
+      <BoardContent board = {board} onBoardChange={handleBoardChange} />
     </Container>
   )
 }
