@@ -45,8 +45,12 @@ function BoardContent({ board }) {
   const lastOverId = useRef(null)
 
   useEffect(() => {
-    setOrderedColumns(mapOrder(board?.columns, board?.columnOrderIds, '_id'))
+    setOrderedColumns(mapOrder(board?.lists, board?.listOrderIds, '_id'))
   }, [board])
+
+  // if (!board) {
+  //  return null;
+  // }
 
   const findColumnByCardId = (cardId) => {
     return orderedColumns.find(column => column?.cards?.map(card => card._id)?.includes(cardId))
