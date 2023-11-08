@@ -10,6 +10,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import Paper from '@mui/material/Paper'
+import { useState } from 'react'
 
 function Copyright(props) {
   return (
@@ -24,15 +25,46 @@ function Copyright(props) {
   )
 }
 
+const validate = (username, email, password) => {
+  const errors = {}
+
+  if (!username) {
+    errors.username = 'User Name is required'
+  }
+
+  if (!email) {
+    errors.email = 'Email is required'
+  } else if (!/\S+@\S+\.\S+/.test(email)) {
+    errors.email = 'Email is invalid'
+  }
+
+  if (!password) {
+    errors.password = 'Password is required'
+  } else if (password.length < 6) {
+    errors.password = 'Password must be 6 characters or more'
+  }
+
+  return errors
+}
 
 export default function SignUp() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
+  const [errors, setErrors] = useState({})
+
   const handleSubmit = (event) => {
     event.preventDefault()
-    // const data = new FormData(event.currentTarget)
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password')
-    // })
+    const errors = validate(username, email, password)
+    setErrors(errors)
+    if (Object.keys(errors).length === 0) {
+      // submit the form
+      // const data = new FormData(event.currentTarget)
+      // console.log({
+      //   email: data.get('email'),
+      //   password: data.get('password')
+      // })
+    }
   }
 
   return (
@@ -80,6 +112,10 @@ export default function SignUp() {
                     id="username"
                     label="User Name"
                     autoFocus
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    error={!!errors.username}
+                    helperText={errors.username}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -90,6 +126,10 @@ export default function SignUp() {
                     label="Email Address"
                     name="email"
                     autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    error={!!errors.email}
+                    helperText={errors.email}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -101,6 +141,10 @@ export default function SignUp() {
                     type="password"
                     id="password"
                     autoComplete="new-password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    error={!!errors.password}
+                    helperText={errors.password}
                   />
                 </Grid>
                 <Grid item xs={12}>
