@@ -138,36 +138,19 @@ function Column({ column, board, onCardChange }) {
   }
 
   return (
-
-    <Box
-      sx={{
-        minWidth: "300px",
-        maxWidth: "300px",
-        bgcolor: (theme) =>
-          theme.palette.mode === "dark" ? "#333643" : "#ebecf0",
-        ml: 2,
-        borderRadius: "6px",
-        height: "fit-content",
-        overflowY: "auto",
-        overflowX: "auto",
-        maxHeight: (theme) =>
-          `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`,
-      }}
-    >
-      {/* Box Column Header */}
-
+    <div ref={setNodeRef} style={dndKitColumnStyles} {...attributes}>
       <Box
         {...listeners}
         sx={{
-          height: (theme) => theme.trello.columnHeaderHeight,
-          p: 2,
-          display: "flex",
-          alignItemts: "center",
-          justifyContent: "space-between",
-          // position: "fixed",
-          // backgroundColor: "#fff" /* Thay đổi màu nền theo ý muốn */,
-          // zIndex: 999,
-
+          minWidth: '300px',
+          maxWidth: '300px',
+          bgcolor: (theme) =>
+            theme.palette.mode === 'dark' ? '#333643' : '#ebecf0',
+          ml: 2,
+          borderRadius: '6px',
+          height: 'fit-content',
+          maxHeight: (theme) =>
+            `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`
         }}
       >
         {/* Box Column Header */}
