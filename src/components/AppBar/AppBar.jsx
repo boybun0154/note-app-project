@@ -20,8 +20,9 @@ import LibraryAddIcon from '@mui/icons-material/LibraryAdd'
 import InputAdornment from '@mui/material/InputAdornment'
 import SearchIcon from '@mui/icons-material/Search'
 import CloseIcon from '@mui/icons-material/Close'
+import SwipeableTemporaryDrawer from '../Drawer/Drawer'
 
-function Appbar() {
+function Appbar({ board }) {
   const [searchValue, setSearchValue] = useState('')
 
   return (
@@ -37,7 +38,7 @@ function Appbar() {
       bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#2c3e50' : '#1565c0')
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        <AppsIcon sx={{ color: 'white' }} />
+        <SwipeableTemporaryDrawer board={board} />
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
           <SvgIcon component={TrelloIcon} fontSize="small" inheritViewBox sx={{ color: 'white' }} />
           <Typography variant="span" sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'white' }}>Trolle</Typography>

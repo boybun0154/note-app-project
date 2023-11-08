@@ -42,7 +42,7 @@ function Column({ column, board, onCardChange }) {
   const [openChangeColumnTitle, setOpenChangeColumnTitle] = useState(false)
   const [changeColumnTitle, setChangeColumnTitle] = useState(column.title)
   const [newCardTitle, setNewCardTitle] = useState('');
-  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, "_id");
+  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id');
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -74,7 +74,7 @@ function Column({ column, board, onCardChange }) {
 
   const addNewCard = () => {
     if (!newCardTitle) {
-      toast.error("Please enter Card Title!", { position: "bottom-right" })
+      toast.error('Please enter Card Title!', { position: 'bottom-right' })
       return
     }
     // console.log(newCardTitle)
@@ -100,7 +100,7 @@ function Column({ column, board, onCardChange }) {
 
   const editColumnTitle = () => {
     if (!changeColumnTitle) {
-      toast.error("Please enter new Column Title!", { position: "bottom-right" })
+      toast.error('Please enter new Column Title!', { position: 'bottom-right' })
       newCardInputRef.current.focus()
       return
     }
@@ -126,7 +126,7 @@ function Column({ column, board, onCardChange }) {
   const deleteColumn = () => {
 
     const destroyColumn = {
-      _destroy: "true"
+      _destroy: 'true'
     }
 
     updateColumn(column._id, destroyColumn).then(() => {
@@ -149,6 +149,8 @@ function Column({ column, board, onCardChange }) {
           ml: 2,
           borderRadius: '6px',
           height: 'fit-content',
+          overflowY: 'auto',
+        overflowX: 'auto',
           maxHeight: (theme) =>
             `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`
         }}
@@ -161,6 +163,9 @@ function Column({ column, board, onCardChange }) {
             display: 'flex',
             alignItemts: 'center',
             justifyContent: 'space-between'
+            // position: "fixed",
+            // backgroundColor: "#fff" /* Thay đổi màu nền theo ý muốn */,
+            // zIndex: 999,
           }}
         >
           <Typography
@@ -321,7 +326,7 @@ function Column({ column, board, onCardChange }) {
               <Tooltip title="Drag to move">
                 <DragHandleIcon
                   sx={{
-                    cursor: "pointer"
+                    cursor: 'pointer'
                   }}
                 />
               </Tooltip>
