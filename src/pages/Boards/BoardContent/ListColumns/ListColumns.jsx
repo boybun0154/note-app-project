@@ -42,7 +42,6 @@ function ListColumns({ columns, board, onColumnChange, onCardChange }) {
       setNewColumnTitle('')
       toggleOpenNewColumnForm()
 
-
       // Call the callback function
       console.log("newBoard: " + newBoard)
       onColumnChange(newBoard)
@@ -57,21 +56,22 @@ function ListColumns({ columns, board, onColumnChange, onCardChange }) {
 
   return (
     <SortableContext items={columns?.map(c => c._id)} strategy={horizontalListSortingStrategy}>
-    <Box
-      sx={{
-        bgcolor: "inherit",
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        overflowX: "auto",
-        "&::-webkit-scrollbar-track": {
-          m: 2,
-        },
-      }}
-    >
-      {columns?.map((column) => (
-        <Column key={column._id} column={column} />
-      ))}
+      <Box
+        sx={{
+          bgcolor: 'inherit',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          overflowX: 'auto',
+          overflowY: 'hidden',
+          '&::-webkit-scrollbar-track': {
+            m: 2
+          }
+        }}
+      >
+        {columns?.map((column) => (
+          <Column key={column._id} column={column} board={board} onCardChange={onCardChange} />
+        ))}
 
         {!openNewColumnForm
           ? <Box onClick={toggleOpenNewColumnForm}
