@@ -63,7 +63,6 @@ function ListColumns({ columns, board, onColumnChange, onCardChange }) {
           height: '100%',
           display: 'flex',
           overflowX: 'auto',
-          overflowY: 'hidden',
           '&::-webkit-scrollbar-track': {
             m: 2
           }
