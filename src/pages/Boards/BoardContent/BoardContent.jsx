@@ -20,6 +20,7 @@ import { arrayMove } from '@dnd-kit/sortable'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { cloneDeep, isEmpty } from 'lodash'
 import { generatePlaceholderCard } from '~/utils/formatters'
+import { updateBoard } from '~/apis'
 
 import Column from './ListColumns/Column/Column'
 import Card from './ListColumns/Column/ListCards/Cards/Card'
@@ -206,6 +207,14 @@ function BoardContent({ board, onBoardChange }) {
         // console.log('dndOrderedColumnsIds: ', dndOrderedColumnsIds)
 
         setOrderedColumns(dndOrderedColumns)
+        //update api
+        updateBoard(board._id, { listOrderIds: dndOrderedColumns.map(c => c._id) }).catch(() => {
+          // let newBoard = cloneDeep(board)
+
+          // console.log('updateBoard: ', newBoard)
+          // onBoardChange(newBoard)
+        })
+
       }
     }
 
