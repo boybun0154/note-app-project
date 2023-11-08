@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react'
 function Board() {
   const [board, setBoard] = useState('')
   const handleBoardChange = (newBoard) => {
-    const boardId = '654a0f2acffe02fea16afe42';
+    const boardId = '654a2bd9ba34f2d67a98ddcb';
     fetchBoardDetailsAPI(boardId)
       .then(board => {
         console.log('card change:', board); // Log the received board data
@@ -22,7 +22,7 @@ function Board() {
 
   useEffect(() => {
     console.log('Fetching board data...'); // Log when fetching starts
-    const boardId = '654a0f2acffe02fea16afe42';
+    const boardId = '654a2bd9ba34f2d67a98ddcb';
     console.log(boardId)
     fetchBoardDetailsAPI(boardId)
       .then(board => {
