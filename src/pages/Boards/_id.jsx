@@ -1,3 +1,4 @@
+
 import Container from '@mui/material/Container'
 import Appbar from '~/components/AppBar/AppBar'
 import BoardBar from './BoardBar/BoardBar'
@@ -39,12 +40,13 @@ function Board() {
   }, []); // Empty dependency array means this effect runs once after the initial render
 
   return (
+
     <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
-      <Appbar />
+      <Appbar board = {board}/>
       <BoardBar board = {board}/>
       <BoardContent board = {board} onBoardChange={handleBoardChange} />
     </Container>
-  )
+  );
 }
 
-export default Board
+export default Board;
