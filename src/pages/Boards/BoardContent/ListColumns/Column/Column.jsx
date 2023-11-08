@@ -44,6 +44,8 @@ function Column({ column }) {
         ml: 2,
         borderRadius: "6px",
         height: "fit-content",
+        overflowY: "auto",
+        overflowX: "auto",
         maxHeight: (theme) =>
           `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`,
       }}
@@ -56,6 +58,9 @@ function Column({ column }) {
           display: "flex",
           alignItemts: "center",
           justifyContent: "space-between",
+          // position: "fixed",
+          // backgroundColor: "#fff" /* Thay đổi màu nền theo ý muốn */,
+          // zIndex: 999,
         }}
       >
         <Typography
