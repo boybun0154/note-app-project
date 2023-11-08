@@ -9,7 +9,9 @@ import TextField from '@mui/material/TextField'
 import CloseIcon from '@mui/icons-material/Close'
 import { toast } from 'react-toastify'
 
-function ListColumns({ columns }) {
+function ListColumns({ columns, board, onColumnChange, onCardChange }) {
+  const [columnState, setColumnState] = useState([])
+  const [boardState, setBoardState] = useState([])
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   const [newColumnTitle, setNewColumnTitle] = useState('')
   const toggleOpenNewColumnForm = () => setOpenNewColumnForm(!openNewColumnForm)
@@ -19,6 +21,31 @@ function ListColumns({ columns }) {
       toast.error('Please enter Column Title!')
       return
     }
+
+    const newColumnToAdd = {
+      boardId: board._id,
+      title: newColumnTitle.trim(),
+      cardOrder: [],
+      cards: []
+    }
+
+    createNewColumn(newColumnToAdd).then(column => {
+      let newColumns = [...columns]
+      newColumns.push(column)
+
+      let newBoard = { ...board }
+      newBoard.columnOrder = newColumns.map(c => c._id)
+      newBoard.columns = newColumns
+
+      setColumnState(newColumns)
+      setBoardState(newBoard)
+      setNewColumnTitle('')
+      toggleOpenNewColumnForm()
+
+      // Call the callback function
+      console.log("newBoard: " + newBoard)
+      onColumnChange(newBoard)
+    })
     // console.log(newColumnTitle)
     // Goi API o day
 
@@ -43,44 +70,44 @@ function ListColumns({ columns }) {
         }}
       >
         {columns?.map((column) => (
-          <Column key={column._id} column={column} />
+          <Column key={column._id} column={column} board={board} onCardChange={onCardChange} />
         ))}
 
         {!openNewColumnForm
           ? <Box onClick={toggleOpenNewColumnForm}
             sx={{
-              minWidth: '250px',
-              maxWidth: '250px',
+              minWidth: "250px",
+              maxWidth: "250px",
               mx: 2,
-              borderRadius: '6px',
-              height: 'fit-content',
-              bgcolor: '#ffffff3d'
+              borderRadius: "6px",
+              height: "fit-content",
+              bgcolor: "#ffffff3d",
             }}
           >
             {/* Add New Column */}
             <Button
               startIcon={<QueueIcon />}
               sx={{
-                color: 'white',
-                width: '100%',
-                justifyContent: 'flex-start',
+                color: "white",
+                width: "100%",
+                justifyContent: "flex-start",
                 pl: 2.5,
-                py: 1
+                py: 1,
               }}
             >
               Add New Column
             </Button>
           </Box>
           : <Box sx={{
-            minWidth: '250px',
-            maxWidth: '250px',
+            minWidth: "250px",
+            maxWidth: "250px",
             mx: 2,
             p: 1,
-            borderRadius: '6px',
-            height: 'fit-content',
-            bgcolor: '#ffffff3d',
-            display: 'flex',
-            flexDirection: 'column',
+            borderRadius: "6px",
+            height: "fit-content",
+            bgcolor: "#ffffff3d",
+            display: "flex",
+            flexDirection: "column",
             gap: 1
           }}>
             <TextField
