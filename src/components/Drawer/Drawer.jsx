@@ -12,6 +12,7 @@ import { ReactComponent as TrelloIcon } from "~/assets/trello.svg";
 import { Chip, SvgIcon, Tooltip } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 export default function SwipeableTemporaryDrawer({ board }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -52,28 +53,35 @@ export default function SwipeableTemporaryDrawer({ board }) {
               <ListItemIcon>
                 {index === 0 && <SvgIcon component={TrelloIcon} />}
                 {index === 1 && <PersonIcon />}
-                {index === 2 && (
-                  <Tooltip title="More options">
-                    <ExpandMoreIcon
-                      sx={{ color: "text.primary", cursor: "pointer" }}
-                      id="basic-column-dropdown"
-                      aria-controls={
-                        open ? "basic-menu-column-dropdown" : undefined
-                      }
-                      aria-haspopup="true"
-                      aria-expanded={open ? "true" : undefined}
-                      onClick={handleClick}
-                    />
-                  </Tooltip>
-                )}
+                {index === 2 && <SettingsIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
-      <h4>Your boards</h4>
-      <Chip icon={<DashboardIcon />} label={board?.title} clickable />
+      <h4
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-start",
+          marginLeft: "20px",
+        }}
+      >
+        Your boards
+      </h4>
+      <Chip
+        icon={<DashboardIcon />}
+        label={board?.title}
+        clickable
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "80%",
+          ml: 2,
+        }}
+      />
     </Box>
   );
   return (
