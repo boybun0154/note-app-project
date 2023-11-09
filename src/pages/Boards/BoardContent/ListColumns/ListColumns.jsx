@@ -43,7 +43,7 @@ function ListColumns({ columns, board, onColumnChange, onCardChange }) {
       toggleOpenNewColumnForm()
 
       // Call the callback function
-      console.log("newBoard: " + newBoard)
+      // console.log('newBoard: ' + newBoard)
       onColumnChange(newBoard)
     })
     // console.log(newColumnTitle)
@@ -75,38 +75,38 @@ function ListColumns({ columns, board, onColumnChange, onCardChange }) {
         {!openNewColumnForm
           ? <Box onClick={toggleOpenNewColumnForm}
             sx={{
-              minWidth: "250px",
-              maxWidth: "250px",
+              minWidth: '250px',
+              maxWidth: '250px',
               mx: 2,
-              borderRadius: "6px",
-              height: "fit-content",
-              bgcolor: "#ffffff3d",
+              borderRadius: '6px',
+              height: 'fit-content',
+              bgcolor: '#ffffff3d'
             }}
           >
             {/* Add New Column */}
             <Button
               startIcon={<QueueIcon />}
               sx={{
-                color: "white",
-                width: "100%",
-                justifyContent: "flex-start",
+                color: 'white',
+                width: '100%',
+                justifyContent: 'flex-start',
                 pl: 2.5,
-                py: 1,
+                py: 1
               }}
             >
               Add New Column
             </Button>
           </Box>
           : <Box sx={{
-            minWidth: "250px",
-            maxWidth: "250px",
+            minWidth: '250px',
+            maxWidth: '250px',
             mx: 2,
             p: 1,
-            borderRadius: "6px",
-            height: "fit-content",
-            bgcolor: "#ffffff3d",
-            display: "flex",
-            flexDirection: "column",
+            borderRadius: '6px',
+            height: 'fit-content',
+            bgcolor: '#ffffff3d',
+            display: 'flex',
+            flexDirection: 'column',
             gap: 1
           }}>
             <TextField
