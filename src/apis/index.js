@@ -38,3 +38,8 @@ export const updateColumn = async (id, data) => {
   const request = await axios.put(`${API_ROOT}/v1/lists/${id}`, data)
   return request.data
 }
+
+export const updateCard = async (id, data) => {
+  const request = await axios.put(`${API_ROOT}/v1/cards/${id}`, data)
+  return request.data
+}

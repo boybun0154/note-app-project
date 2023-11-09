@@ -20,7 +20,7 @@ import { arrayMove } from '@dnd-kit/sortable'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { cloneDeep, isEmpty } from 'lodash'
 import { generatePlaceholderCard } from '~/utils/formatters'
-import { updateBoard } from '~/apis'
+import { updateBoard, updateColumn, updateCard } from '~/apis'
 
 import Column from './ListColumns/Column/Column'
 import Card from './ListColumns/Column/ListCards/Cards/Card'
@@ -88,6 +88,11 @@ function BoardContent({ board, onBoardChange }) {
         }
 
         nextActiveColumn.cardOrderIds = nextActiveColumn.cards.map(card => card._id)
+        // update api
+        // updateColumn(nextActiveColumn._id, { cardOrderIds: nextActiveColumn.cards.map(card => card._id) }).catch(() => {
+        //   // revert changes
+        //   // return prevColumns
+        // })
       }
       // find & insert card at new col
       if (nextOverColumn) {
@@ -95,7 +100,7 @@ function BoardContent({ board, onBoardChange }) {
         // console.log('activeDraggingCardData: ', activeDraggingCardData)
         const rebuild_activeDraggingCardData = {
           ...activeDraggingCardData,
-          columnId: nextOverColumn._id
+          listId: nextOverColumn._id
         }
         // console.log('rebuild_activeDraggingCardData: ', rebuild_activeDraggingCardData)
         nextOverColumn.cards = nextOverColumn.cards.toSpliced(newCardIndex, 0, rebuild_activeDraggingCardData)
@@ -103,6 +108,15 @@ function BoardContent({ board, onBoardChange }) {
         nextOverColumn.cards = nextOverColumn.cards.filter(card => !card?.FE_PlaceholderCard)
 
         nextOverColumn.cardOrderIds = nextOverColumn.cards.map(card => card._id)
+        // update api
+        // updateColumn(nextOverColumn._id, { cardOrderIds: nextOverColumn.cards.map(card => card._id) }).catch(() => {
+        //   // revert changes
+        //   // return prevColumns
+        // })
+        // updateCard(activeDraggingCardId, { listId: nextOverColumn._id }).catch(() => {
+        //   // revert changes
+        //   // return prevColumns
+        // })
       }
 
       return nextColumns
@@ -112,10 +126,10 @@ function BoardContent({ board, onBoardChange }) {
   const handleDragStart = (event) => {
     // console.log('handleDragStart', event)
     setActiveDragItemId(event?.active?.id)
-    setActiveDragItemType(event?.active?.data?.current?.columnId ? ACTIVE_DRAG_ITEM_TYPE.CARD : ACTIVE_DRAG_ITEM_TYPE.COLUMN)
+    setActiveDragItemType(event?.active?.data?.current?.listId ? ACTIVE_DRAG_ITEM_TYPE.CARD : ACTIVE_DRAG_ITEM_TYPE.COLUMN)
     setActiveDragItemData(event?.active?.data?.current)
 
-    if (event?.active?.data?.current?.columnId) {
+    if (event?.active?.data?.current?.listId) {
       setOldDragColumn(findColumnByCardId(event?.active?.id))
     }
   }
@@ -123,7 +137,7 @@ function BoardContent({ board, onBoardChange }) {
   const handleDragOver = (event) => {
     if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) return
 
-    // console.log('handleDragOver: ', event)
+    console.log('handleDragOver: ', event)
     const { active, over } = event
     if (!active || !over) return
 
@@ -149,7 +163,7 @@ function BoardContent({ board, onBoardChange }) {
   }
 
   const handleDragEnd = (event) => {
-    // console.log('handleDragEnd: ', event)
+    console.log('handleDragEnd: ', event)
     const { active, over } = event
 
     if (!active || !over) return
@@ -176,6 +190,10 @@ function BoardContent({ board, onBoardChange }) {
           activeDraggingCardId,
           activeDraggingCardData
         )
+        // update apis
+        updateColumn(activeColumn._id, { cardOrderIds: activeColumn.cards.map(card => card._id) })
+        updateColumn(overColumn._id, { cardOrderIds: overColumn.cards.map(card => card._id) })
+        updateCard(activeDraggingCardId, { listId: overColumn._id })
       } else {
         // console.log('same col')
         const oldCardIndex = oldDragColumn?.cards?.findIndex(c => c._id === activeDragItemId)
@@ -188,7 +206,13 @@ function BoardContent({ board, onBoardChange }) {
 
           const targetColumn = nextColumns.find(column => column._id === overColumn._id)
           targetColumn.cards = dndOrderedCards
-          targetColumn.cardOrderIds = dndOrderedCards.map(card => card)
+          targetColumn.cardOrderIds = dndOrderedCards.map(card => card._id)
+          // console.log('dndOrderedCards: ', dndOrderedCards)
+          //update api
+          updateColumn(targetColumn._id, { cardOrderIds: dndOrderedCards.map(card => card._id) }).catch(() => {
+            // revert changes
+            // return prevColumns
+          })
           return nextColumns
         })
       }
@@ -209,8 +233,10 @@ function BoardContent({ board, onBoardChange }) {
         setOrderedColumns(dndOrderedColumns)
         //update api
         updateBoard(board._id, { listOrderIds: dndOrderedColumns.map(c => c._id) }).catch(() => {
-          // let newBoard = cloneDeep(board)
+          // revert changes
+          // setOrderedColumns(orderedColumns)
 
+          // let newBoard = cloneDeep(board)
           // console.log('updateBoard: ', newBoard)
           // onBoardChange(newBoard)
         })
