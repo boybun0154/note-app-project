@@ -12,7 +12,7 @@ export const fetchBoardDetailsAPI = async (boardId) => {
 }
 
 export const createNewColumn = async (data) => {
-  console.log(data.boardId, data.title)
+  // console.log(data.boardId, data.title)
   const request = await axios.post(`${API_ROOT}/v1/lists`,
     {
       boardId: data.boardId,
@@ -23,7 +23,7 @@ export const createNewColumn = async (data) => {
 }
 
 export const createNewCard = async (data) => {
-  console.log(data.boardId, data.title)
+  // console.log(data.boardId, data.title)
   const request = await axios.post(`${API_ROOT}/v1/cards`,
     {
       boardId: data.boardId,
