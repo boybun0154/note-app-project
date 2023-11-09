@@ -11,6 +11,7 @@ import Tooltip from '@mui/material/Tooltip'
 import Button from '@mui/material/Button'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import { capitalizeFirstLetter } from '~/utils/formatters'
+import Filters from './Menus/Filters'
 const MENU_STYLES = {
   color: 'white',
   bgcolor: 'transparent',
@@ -68,12 +69,7 @@ function BoardBar({ board }) {
           label="Automation"
           clickable
         />
-        <Chip
-          sx={MENU_STYLES}
-          icon={<FilterListIcon />}
-          label="Filters"
-          clickable
-        />
+        <Filters />
       </Box>
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
