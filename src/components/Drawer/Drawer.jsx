@@ -15,45 +15,45 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SettingsIcon from "@mui/icons-material/Settings";
 
 export default function SwipeableTemporaryDrawer({ board }) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const open = Boolean(anchorEl)
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
   const [state, setState] = React.useState({
-    left: false,
-  });
+    left: false
+  })
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
     ) {
-      return;
+      return
     }
 
-    setState({ ...state, [anchor]: open });
-  };
+    setState({ ...state, [anchor]: open })
+  }
 
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Boards", "Members", "Settings"].map((text, index) => (
+        {['Boards', 'Members', 'Settings'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
                 {index === 0 && <SvgIcon component={TrelloIcon} />}
                 {index === 1 && <PersonIcon />}
-                {index === 2 && <SettingsIcon />}
+                {index === 2 && <SettingsIcon />
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
@@ -83,19 +83,19 @@ export default function SwipeableTemporaryDrawer({ board }) {
         }}
       />
     </Box>
-  );
+  )
   return (
     <div>
-      {["left"].map((anchor) => (
+      {['left'].map((anchor) => (
         <React.Fragment key={anchor}>
           <AppsIcon
             onClick={toggleDrawer(anchor, true)}
             sx={{
-              color: "white",
-              height: "40px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
+              color: 'white',
+              height: '40px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
             }}
           >
             {anchor}

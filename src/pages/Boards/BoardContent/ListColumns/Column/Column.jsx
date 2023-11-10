@@ -16,6 +16,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
+
 import Box from "@mui/material/Box";
 import { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -47,9 +48,10 @@ function Column({ column, board, onCardChange }) {
   const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, "_id");
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -65,10 +67,10 @@ function Column({ column, board, onCardChange }) {
     data: { ...column },
   });
   function openDeleteColumnDialog() {
-    setOpenDialog(true);
+    setOpenDialog(true)
   }
   function handleCloseDialog() {
-    setOpenDialog(false);
+    setOpenDialog(false)
   }
 
   const dndKitColumnStyles = {
@@ -126,10 +128,10 @@ function Column({ column, board, onCardChange }) {
 
     updateColumn(column._id, newColumnTitle).then(() => {
       // Assuming updatedTitle is the response from the API containing the updated title
-      let newColumns = cloneDeep(column);
+      let newColumns = cloneDeep(column)
 
-      onCardChange(newColumns);
-    });
+      onCardChange(newColumns)
+    })
 
     // Đóng lại trạng thái thêm Card mới & Clear Input
     toggleOpenChangeColumnTitle();
@@ -142,7 +144,7 @@ function Column({ column, board, onCardChange }) {
     };
 
     updateColumn(column._id, destroyColumn).then(() => {
-      let newColumns = cloneDeep(column);
+      let newColumns = cloneDeep(column)
 
       onCardChange(newColumns);
     });
@@ -283,13 +285,13 @@ function Column({ column, board, onCardChange }) {
                 'aria-labelledby': 'basic-column-dropdown'
               }}
             >
-              <MenuItem onClick={() => { toggleOpenNewCardForm(); handleClose(); }} >
+              <MenuItem onClick={() => { toggleOpenNewCardForm(); handleClose() }} >
                 <ListItemIcon>
                   <AddCardIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText> Add New Card </ListItemText>
               </MenuItem>
-              <MenuItem onClick={() => { toggleOpenChangeColumnTitle(); handleClose(); }} >
+              <MenuItem onClick={() => { toggleOpenChangeColumnTitle(); handleClose() }} >
                 <ListItemIcon>
                   <AddCardIcon fontSize="small" />
                 </ListItemIcon>
