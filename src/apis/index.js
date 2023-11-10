@@ -1,6 +1,18 @@
 import axios from 'axios'
 import { API_ROOT } from '~/utils/constants'
 
+export const createNewBoard = async (data) => {
+  console.log('data', data)
+  const response = await axios.post(`${API_ROOT}/v1/boards`,
+  {
+    title: data.title,
+    description: data.description,
+    type: data.type,
+    ownerId: data.ownerId
+  })
+  return response.data
+}
+
 export const updateBoard = async (boardId, data) => {
   const response = await axios.put(`${API_ROOT}/v1/boards/${boardId}`, data)
   return response.data

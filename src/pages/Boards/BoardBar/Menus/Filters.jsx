@@ -84,7 +84,7 @@ export default function Filters({ board }) {
         }}
       >
         <MenuItem sx={{ py: '4px', '&:hover': { bgcolor: 'transparent' } }} divider disableRipple>
-          <Typography sx={{ fontWeight: 500 }} variant='body2'>Members</Typography>
+          <Typography sx={{ fontWeight: 500 }} variant='body2' color='text.secondary'>Members</Typography>
         </MenuItem>
         <MenuItem sx={{ py: '4px'}} disableRipple>
           <FormControlLabel control={<Checkbox size='small' checked={johndoe} onChange={handleChange} name="johndoe" />} label="John Doe" />
