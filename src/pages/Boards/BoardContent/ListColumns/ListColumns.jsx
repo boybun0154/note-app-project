@@ -8,6 +8,8 @@ import { useState } from 'react'
 import TextField from '@mui/material/TextField'
 import CloseIcon from '@mui/icons-material/Close'
 import { toast } from 'react-toastify'
+import { generatePlaceholderCard } from '~/utils/formatters'
+import { cloneDeep } from 'lodash'
 
 function ListColumns({ columns, board, onColumnChange, onCardChange }) {
   const [columnState, setColumnState] = useState([])
@@ -25,15 +27,17 @@ function ListColumns({ columns, board, onColumnChange, onCardChange }) {
     const newColumnToAdd = {
       boardId: board._id,
       title: newColumnTitle.trim(),
-      cardOrder: [],
+      cardOrderIds: [],
       cards: []
     }
 
     createNewColumn(newColumnToAdd).then(column => {
-      let newColumns = [...columns]
+      let newColumns = cloneDeep(columns)
+      column.cards = [generatePlaceholderCard(column)]
+      column.cardOrderIds = column.cards.map(c => c._id)
       newColumns.push(column)
 
-      let newBoard = { ...board }
+      let newBoard = cloneDeep(board)
       newBoard.columnOrder = newColumns.map(c => c._id)
       newBoard.columns = newColumns
 

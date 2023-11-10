@@ -5,11 +5,13 @@ import BoardContent from './BoardContent/BoardContent'
 // import { mockData } from '~/apis/mock-data'
 import { fetchBoardDetailsAPI } from '~/apis'
 import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 
 function Board() {
   const [board, setBoard] = useState('')
+  let { boardId } = useParams()
+  // const boardId = '654a2bd9ba34f2d67a98ddcb'
   const handleBoardChange = (newBoard) => {
-    const boardId = '654a2bd9ba34f2d67a98ddcb'
     fetchBoardDetailsAPI(boardId)
       .then(board => {
         // console.log('card change:', board) // Log the received board data
@@ -22,7 +24,6 @@ function Board() {
 
   useEffect(() => {
     // console.log('Fetching board data...') // Log when fetching starts
-    const boardId = '654a2bd9ba34f2d67a98ddcb'
     // console.log(boardId)
     fetchBoardDetailsAPI(boardId)
       .then(board => {
