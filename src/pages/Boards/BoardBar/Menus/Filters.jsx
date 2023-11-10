@@ -1,20 +1,14 @@
 import React from 'react'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import Divider from '@mui/material/Divider'
-import ListItemText from '@mui/material/ListItemText'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import Check from '@mui/icons-material/Check'
 import Chip from '@mui/material/Chip'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import { Typography } from '@mui/material'
 
-export default function Filters() {
+export default function Filters({ board }) {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -31,12 +25,18 @@ export default function Filters() {
   })
   const { johndoe, janedoe, brucewayne, clarkkent } = state
 
+  const findColumnByMemberId = (memberId) =>{
+    return board.lists.filter(list => list?.cards?.map(c => c._id)?.memberIds.includes(memberId))
+  }
+
+
+
   const handleChange = (event) => {
     setState({
       ...state,
       [event.target.name]: event.target.checked
-    });
-  };
+    })
+  }
 
 
   return (

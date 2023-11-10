@@ -4,7 +4,6 @@ import DashboardIcon from '@mui/icons-material/Dashboard'
 import VpnLockIcon from '@mui/icons-material/VpnLock'
 import AddToDriveIcon from '@mui/icons-material/AddToDrive'
 import BoltIcon from '@mui/icons-material/Bolt'
-import FilterListIcon from '@mui/icons-material/FilterList'
 import Avatar from '@mui/material/Avatar'
 import AvatarGroup from '@mui/material/AvatarGroup'
 import Tooltip from '@mui/material/Tooltip'
@@ -69,7 +68,7 @@ function BoardBar({ board }) {
           label="Automation"
           clickable
         />
-        <Filters />
+        <Filters board={board} />
       </Box>
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
