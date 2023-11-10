@@ -53,7 +53,7 @@ export default function SwipeableTemporaryDrawer({ board }) {
               <ListItemIcon>
                 {index === 0 && <SvgIcon component={TrelloIcon} />}
                 {index === 1 && <PersonIcon />}
-                {index === 2 && <SettingsIcon />
+                {index === 2 && <SettingsIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
