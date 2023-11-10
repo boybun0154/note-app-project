@@ -1,105 +1,134 @@
-import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
-import { Link } from 'react-router-dom'
-import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import Typography from '@mui/material/Typography'
-import Container from '@mui/material/Container'
-import Paper from '@mui/material/Paper'
-import { useState } from 'react'
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import { Link, useNavigate } from "react-router-dom";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import { useCallback, useEffect, useState } from "react";
+import _ from "lodash";
+import { auth } from "../../apis/index";
+import { auth as authHelper } from "../../helpers/index";
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         Hondaiteam
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
-  )
-}
-
-const validate = (email, password) => {
-  const errors = {}
-
-  if (!email) {
-    errors.email = 'Email is required'
-  } else if (!/\S+@\S+\.\S+/.test(email)) {
-    errors.email = 'Email is invalid'
-  }
-
-  if (!password) {
-    errors.password = 'Password is required'
-  } else if (password.length < 6) {
-    errors.password = 'Password must be 6 characters or more'
-  }
-
-  return errors
+  );
 }
 
 export default function SignIn() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [errors, setErrors] = useState({})
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    const errors = validate(email, password)
-    setErrors(errors)
+  const validate = useCallback(
+    (email, password) => {
+      const errors = {};
+
+      if (!email) {
+        errors.email = "Username is required";
+      } else if (username.length < 6) {
+        errors.email = "Username must be 6 characters or more";
+      }
+
+      if (!password) {
+        errors.password = "Password is required";
+      } else if (password.length < 6) {
+        errors.password = "Password must be 6 characters or more";
+      }
+
+      return errors;
+    },
+    [username.length]
+  );
+
+  useEffect(() => {
+    const errors = validate(username, password);
+    setErrors(errors);
+  }, [username, password, validate]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     if (Object.keys(errors).length === 0) {
       // submit the form
-      // const data = new FormData(event.currentTarget)
-      // console.log({
-      //   email: data.get('email'),
-      //   password: data.get('password')
-      // })
+      const data = new FormData(event.currentTarget);
+      const user = {
+        username: data.get("username"),
+        password: data.get("password")
+      };
+      const responseData = await auth.login(user);
+      if (responseData.isSuccess) {
+        authHelper.setJwtToken(responseData.accessToken);
+        navigate('/');
+      }
     }
-  }
+  };
 
   return (
-    <Box sx={{
-      backgroundImage: 'url("https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.499/trello-left.4f52d13c.svg"), url("https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.499/trello-right.3ee60d6f.svg")',
-      backgroundRepeat: 'no-repeat, no-repeat',
-      backgroundPosition: 'left bottom, right bottom',
-      backgroundSize: 'calc(((100vw - 400px) / 2) - 32px), calc(((100vw - 400px) / 2) - 32px)'
-    }}>
+    <Box
+      sx={{
+        backgroundImage:
+          'url("https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.499/trello-left.4f52d13c.svg"), url("https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.499/trello-right.3ee60d6f.svg")',
+        backgroundRepeat: "no-repeat, no-repeat",
+        backgroundPosition: "left bottom, right bottom",
+        backgroundSize:
+          "calc(((100vw - 400px) / 2) - 32px), calc(((100vw - 400px) / 2) - 32px)",
+      }}
+    >
       <Container maxWidth="xs">
         <Paper
           square={false}
           elevation={3}
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: 4
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: 4,
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={(e) => handleSubmit(e)}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
               autoFocus
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               error={!!errors.email}
               helperText={errors.email}
             />
@@ -122,32 +151,30 @@ export default function SignIn() {
               label="Remember me"
             />
             <Button
-              href='/'
+              disabled={!_.isEqual(errors, {})}
               type="submit"
               fullWidth
               variant="contained"
               sx={{
                 mt: 3,
                 mb: 2,
-                backgroundColor: '#0052CC',
-                boxShadow: 'none',
-                '&:hover': {
-                  backgroundColor: '#3742fa',
-                  boxShadow: 'none'
-                }
+                backgroundColor: "#0052CC",
+                boxShadow: "none",
+                "&:hover": {
+                  backgroundColor: "#3742fa",
+                  boxShadow: "none",
+                },
               }}
             >
               Sign In
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link variant="body2">
-                  Forgot password?
-                </Link>
+                <Link variant="body2">Forgot password?</Link>
               </Grid>
               <Grid item>
                 <Link to="/signup" variant="body2">
-                  {'Don\'t have an account? Sign Up'}
+                  {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>
@@ -156,5 +183,5 @@ export default function SignIn() {
         </Paper>
       </Container>
     </Box>
-  )
+  );
 }
