@@ -7,7 +7,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     loader: async () => {
-      const boardId = '654a2bd9ba34f2d67a98ddcb'
+      const boardId = "654a2bd9ba34f2d67a98ddcb";
       return redirect(`/boards/${boardId}`)
     }
   },
