@@ -8,18 +8,7 @@ import {
 import React, { useState } from "react";
 import CardDetails from "./Cards/CardDetails";
 
-export const CardContext = React.createContext();
-
 function ListCards({ cards }) {
-  const [isCardDetailsOpen, setIsCardDetailsOpen] = useState(false);
-  const openCardDetails = () => {
-    setIsCardDetailsOpen(true);
-  };
-
-  const closeCardDetails = () => {
-    setIsCardDetailsOpen(false);
-  };
-
   return (
     <SortableContext
       items={cards?.map((c) => c._id)}
@@ -49,18 +38,7 @@ function ListCards({ cards }) {
         }}
       >
         {cards?.map((card) => (
-          <CardContext.Provider
-            key={card._id}
-            value={{
-              isCardDetailsOpen,
-              openCardDetails,
-              closeCardDetails,
-              selectedCardTitle: card.title,
-            }}
-          >
-            <Card key={card._id} card={card} />
-            {isCardDetailsOpen && <CardDetails />}
-          </CardContext.Provider>
+          <Card key={card._id} card={card} />
         ))}
       </Box>
     </SortableContext>

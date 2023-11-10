@@ -12,8 +12,7 @@ import CommentIcon from "@mui/icons-material/Comment";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import CardDetails from "./CardDetails";
-import React, { useContext } from "react";
-import { CardContext } from "../ListCards";
+import React from "react";
 
 function Card({ card }) {
   const {
@@ -52,10 +51,9 @@ function Card({ card }) {
   const handleCardDetailsClose = () => {
     setIsCardDetailsOpen(false);
   };
-  const { openCardDetails } = useContext(CardContext);
   return (
     <MuiCard
-      onClick={openCardDetails}
+      onClick={handleCardClick}
       ref={setNodeRef}
       style={dndKitCardStyles}
       {...attributes}
@@ -98,6 +96,7 @@ function Card({ card }) {
         <CardDetails
           isOpen={isCardDetailsOpen}
           onClose={handleCardDetailsClose}
+          card={card}
         />
       )}
     </MuiCard>
