@@ -23,8 +23,6 @@ function Board() {
   }
 
   useEffect(() => {
-    // console.log('Fetching board data...') // Log when fetching starts
-    // console.log(boardId)
     fetchBoardDetailsAPI(boardId)
       .then(board => {
         console.log('Board data received:', board) // Log the received board data
@@ -37,7 +35,7 @@ function Board() {
     return () => {
       // console.log('Cleanup or cancellation logic (if needed)...')
     }
-  }, []) // Empty dependency array means this effect runs once after the initial render
+  }, [boardId]) // Empty dependency array means this effect runs once after the initial render
 
   return (
     <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
