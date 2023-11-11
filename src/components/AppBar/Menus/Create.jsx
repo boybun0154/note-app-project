@@ -42,7 +42,8 @@ export default function Create() {
         title: title,
         description: "Empty description",
         type: type,
-        ownerId: authHelper.getCurrentUserId()
+        ownerId: authHelper.getCurrentUserId(),
+        memberIds: [authHelper.getCurrentUserId()]
       };
       createNewBoard(newBoardToCreate).then((board) => {
         // does not auto redirect, only change url
