@@ -75,7 +75,7 @@ export default function SignIn() {
         password: data.get("password")
       };
       const responseData = await auth.login(user);
-      const tempBoardId = "654a2bd9ba34f2d67a98ddcb"
+      const tempBoardId = "654f462cbae839768f802f92"
       if (responseData.isSuccess) {
         authHelper.setJwtToken(responseData.accessToken);
         authHelper.setCurrentUserId(responseData.id);
