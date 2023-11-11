@@ -65,7 +65,8 @@ function CardDetails({ isOpen, onClose, card }) {
                   <Typography variant="subtitle2" gutterBottom>
                     Description
                   </Typography>
-                  <TextField fullWidth label="More Details" id="fullWidth" />
+                  <Box>{card.description}</Box>
+                  <TextField fullWidth label="More Details" id="fullWidth" >{card.description}</TextField>
                 </Box>
               </Box>
               {/* Activity */}
