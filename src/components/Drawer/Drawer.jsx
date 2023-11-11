@@ -14,7 +14,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SettingsIcon from "@mui/icons-material/Settings";
 
-export default function SwipeableTemporaryDrawer({ board }) {
+export default function SwipeableTemporaryDrawer({ boardByUserId }) {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -70,18 +70,25 @@ export default function SwipeableTemporaryDrawer({ board }) {
       >
         Your boards
       </h4>
-      <Chip
-        icon={<DashboardIcon />}
-        label={board?.title}
-        clickable
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          width: "80%",
-          ml: 2,
-        }}
-      />
+      {Array.isArray(boardByUserId) && boardByUserId.length > 0 ? (
+        boardByUserId.map((board) => (
+          <Chip
+            key={board._id}
+            icon={<DashboardIcon />}
+            label={board.title}
+            clickable
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "80%",
+              ml: 2,
+            }}
+          />
+        ))
+      ) : (
+        <p>No boards available</p>
+      )}
     </Box>
   )
   return (
