@@ -10,6 +10,7 @@ export const createNewBoard = async (data) => {
     description: data.description,
     type: data.type,
     ownerId: data.ownerId,
+    memberIds: data.memberIds
   });
   return response.data;
 };
