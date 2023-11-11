@@ -11,7 +11,7 @@ const setJwtToken = (token: string): void => {
 };
 
 const getCurrentUserId = (): string => {
-  return sessionStorage.getItem("currentUserID");
+  return sessionStorage.getItem("currentUserId");
 }
 
 const setCurrentUserId = (userId: string): void => {

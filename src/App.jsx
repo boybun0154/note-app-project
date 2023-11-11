@@ -1,7 +1,8 @@
 import Board from '~/pages/Boards/_id'
-import { createBrowserRouter, redirect, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import SignIn from './pages/Auth/Signin'
 import SignUp from './pages/Auth/Signup'
+import BoardList from '~/pages/Boards/index';
 
 const router = createBrowserRouter([
   {
@@ -11,6 +12,10 @@ const router = createBrowserRouter([
   {
     path: '/signin',
     element: <SignIn />
+  },
+  {
+    path: '/boards',
+    element: <BoardList />
   },
   {
     path: '/boards/:boardId',
