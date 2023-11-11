@@ -75,9 +75,11 @@ export default function SignIn() {
         password: data.get("password")
       };
       const responseData = await auth.login(user);
+      const tempBoardId = "654a2bd9ba34f2d67a98ddcb"
       if (responseData.isSuccess) {
-        authHelper.setJwtToken(responseData.accessToken)
-        navigate('/')
+        authHelper.setJwtToken(responseData.accessToken);
+        authHelper.setCurrentUserId(responseData.id);
+        navigate(`/boards/${tempBoardId}`)
       }
     }
   };
@@ -116,6 +118,7 @@ export default function SignIn() {
             component="form"
             onSubmit={(e) => handleSubmit(e)}
             noValidate
+            autoComplete="off"
             sx={{ mt: 1 }}
           >
             <TextField

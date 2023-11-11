@@ -1,6 +1,4 @@
 import {
-  RawAxiosRequestHeaders,
-  AxiosHeaders,
   AxiosRequestConfig,
 } from "axios";
 
@@ -11,6 +9,14 @@ const getJwtToken = () => {
 const setJwtToken = (token: string): void => {
   sessionStorage.setItem("jwt", token);
 };
+
+const getCurrentUserId = (): string => {
+  return sessionStorage.getItem("currentUserId");
+}
+
+const setCurrentUserId = (userId: string): void => {
+  sessionStorage.setItem("currentUserId", userId);
+}
 
 const getHeader = (): AxiosRequestConfig => {
   return {
@@ -23,5 +29,7 @@ const getHeader = (): AxiosRequestConfig => {
 export const auth = {
   getJwtToken,
   setJwtToken,
-  getHeader
+  getHeader,
+  setCurrentUserId,
+  getCurrentUserId
 };

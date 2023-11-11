@@ -6,7 +6,8 @@ import MenuItem from '@mui/material/MenuItem'
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd'
 import { FormGroup, TextField } from '@mui/material'
 import { createNewBoard } from '~/apis'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import {auth as authHelper} from "../../../helpers";
 
 export default function Create() {
   const navigate = useNavigate()
@@ -39,16 +40,17 @@ export default function Create() {
       // submit the form
       const newBoardToCreate = {
         title: title,
-        description: 'Empty description',
+        description: "Empty description",
         type: type,
-        ownerId: '654324cb637a7840b2af0edc'
-      }
+        ownerId: authHelper.getCurrentUserId(),
+        memberIds: [authHelper.getCurrentUserId()]
+      };
       createNewBoard(newBoardToCreate).then((board) => {
-        console.log('newBoard:', board)
         // does not auto redirect, only change url
         navigate(`/boards/${board._id}`)
         // navigate(0)
       })
+      handleClose();
     }
   }
 
