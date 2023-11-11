@@ -40,24 +40,24 @@ export default function SignIn() {
   const navigate = useNavigate();
 
   const validate = useCallback(
-    (email, password) => {
+    (username, password) => {
       const errors = {};
 
-      if (!email) {
-        errors.email = "Username is required";
-      } else if (username.length < 6) {
-        errors.email = "Username must be 6 characters or more";
+      if (!username) {
+        errors.username = "Username is required";
+      } else if (username.length < 5) {
+        errors.username = "Username must be 5 characters or more";
       }
 
       if (!password) {
         errors.password = "Password is required";
-      } else if (password.length < 6) {
-        errors.password = "Password must be 6 characters or more";
+      } else if (password.length < 8) {
+        errors.password = "Password must be 8 characters or more";
       }
 
       return errors;
     },
-    [username.length]
+    []
   );
 
   useEffect(() => {
@@ -76,8 +76,8 @@ export default function SignIn() {
       };
       const responseData = await auth.login(user);
       if (responseData.isSuccess) {
-        authHelper.setJwtToken(responseData.accessToken);
-        navigate('/');
+        authHelper.setJwtToken(responseData.accessToken)
+        navigate('/')
       }
     }
   };
@@ -129,8 +129,8 @@ export default function SignIn() {
               autoFocus
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              error={!!errors.email}
-              helperText={errors.email}
+              error={!!errors.username}
+              helperText={errors.username}
             />
             <TextField
               margin="normal"

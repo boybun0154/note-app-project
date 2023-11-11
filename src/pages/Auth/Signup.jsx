@@ -3,14 +3,17 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import Paper from '@mui/material/Paper'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import _ from "lodash";
+import { auth } from "../../apis/index";
+import { auth as authHelper } from "../../helpers/index";
 
 function Copyright(props) {
   return (
@@ -25,45 +28,62 @@ function Copyright(props) {
   )
 }
 
-const validate = (username, email, password) => {
-  const errors = {}
-
-  if (!username) {
-    errors.username = 'User Name is required'
-  }
-
-  if (!email) {
-    errors.email = 'Email is required'
-  } else if (!/\S+@\S+\.\S+/.test(email)) {
-    errors.email = 'Email is invalid'
-  }
-
-  if (!password) {
-    errors.password = 'Password is required'
-  } else if (password.length < 6) {
-    errors.password = 'Password must be 6 characters or more'
-  }
-
-  return errors
-}
-
 export default function SignUp() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
   const [errors, setErrors] = useState({})
+  const navigate = useNavigate()
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
+  const validate = useCallback(
+    (username, email, password) => {
+    const errors = {}
+
+    if (!username) {
+      errors.username = 'User Name is required'
+    } else if (username.length < 5) {
+      errors.username = 'User Name must be 5 characters or more'
+    }
+
+    if (!email) {
+      errors.email = 'Email is required'
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      errors.email = 'Email is invalid'
+    }
+
+    if (!password) {
+      errors.password = 'Password is required'
+    } else if (password.length < 8) {
+      errors.password = 'Password must be 8 characters or more'
+    }
+    return errors
+    },
+    []
+  )
+
+  useEffect(() => {
     const errors = validate(username, email, password)
-    setErrors(errors)
+    setErrors(errors);
+  }, [username, email, password, validate]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
     if (Object.keys(errors).length === 0) {
       // submit the form
-      // const data = new FormData(event.currentTarget)
-      // console.log({
-      //   email: data.get('email'),
-      //   password: data.get('password')
-      // })
+      const data = new FormData(event.currentTarget);
+      const user = {
+        username: data.get("username"),
+        password: data.get("password"),
+        email: data.get("email"),
+        avatar: 'https://example.com/avatar5.jpg',
+        displayName: data.get("username")
+      };
+      const responseData = await auth.register(user);
+      console.log('responseData: ', responseData);
+      if (responseData.acknowledged) {
+        // authHelper.setJwtToken(responseData.accessToken)
+        navigate('/signin')
+      }
     }
   }
 
@@ -101,7 +121,7 @@ export default function SignUp() {
             <Typography component="h1" variant="h5">
               Sign up
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Box component="form" noValidate onSubmit={(e) => handleSubmit(e)} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
@@ -155,7 +175,7 @@ export default function SignUp() {
                 </Grid>
               </Grid>
               <Button
-                href='/'
+                disabled={!_.isEqual(errors, {})}
                 type="submit"
                 fullWidth
                 variant="contained"
