@@ -3,14 +3,6 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import Divider from '@mui/material/Divider'
-import ListItemText from '@mui/material/ListItemText'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import Typography from '@mui/material/Typography'
-import ContentCut from '@mui/icons-material/ContentCut'
-import ContentCopy from '@mui/icons-material/ContentCopy'
-import ContentPaste from '@mui/icons-material/ContentPaste'
-import Cloud from '@mui/icons-material/Cloud'
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd'
 import { FormGroup, TextField } from '@mui/material'
 import { createNewBoard } from '~/apis'
@@ -36,7 +28,7 @@ export default function Create() {
     }
     return errors
   }
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     // console.log('event: ', event)
     event.preventDefault()
     const errors = validate(title)
