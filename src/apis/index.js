@@ -28,6 +28,11 @@ export const fetchBoardDetailsAPI = async (boardId) => {
   return response.data;
 };
 
+export const fetchBoardByUserIdDetailsAPI = async (userId) => {
+  const response = await axios.get(`${API_ROOT}/v1/boards/owner/${userId}`)
+  return response.data
+}
+
 export const createNewColumn = async (data) => {
   // console.log(data.boardId, data.title)
   const request = await axios.post(`${API_ROOT}/v1/lists`, {
