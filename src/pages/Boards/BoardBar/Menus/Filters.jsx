@@ -31,7 +31,7 @@ function FilterItem({ userid, handleChange }) {
 
 export default function Filters({ board, setBoard }) {
   const [anchorEl, setAnchorEl] = React.useState(null)
-  const [state, setState] = React.useState({})
+  const [checked, setChecked] = React.useState({})
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -41,14 +41,9 @@ export default function Filters({ board, setBoard }) {
   }
   // console.log('board.memberIds: ', board?.memberIds)
 
-  const findColumnByMemberId = (memberId) =>{
-    const filteredColumns = board.lists?.filter(column => column?.cards?.map(c => c._id)?.memberIds?.includes(memberId))
-    return filteredColumns
-  }
-
   const handleChange = (event) => {
-    setState({
-      ...state,
+    setChecked({
+      ...checked,
       [event.target.name]: event.target.checked
     })
     if (event.target.checked) {
@@ -56,7 +51,9 @@ export default function Filters({ board, setBoard }) {
       setBoard(prevBoard => {
         const newBoard = cloneDeep(prevBoard)
         newBoard.lists = board.lists.filter(column => column.cards.some(c => c.memberIds.includes(event.target.id)))
-        newBoard.lists.cards = newBoard.lists.map(column => column.cards.filter(card => card.memberIds.includes(event.target.id)))
+        newBoard.lists.cards = newBoard.lists.forEach(column => {
+          column.cards = column.cards.filter(card => card.memberIds.includes(event.target.id));
+        })
         return newBoard
       })
     }
