@@ -28,6 +28,11 @@ export const fetchBoardDetailsAPI = async (boardId) => {
   return response.data;
 };
 
+export const fetchBoardByUserIdDetailsAPI = async (userId) => {
+  const response = await axios.get(`${API_ROOT}/v1/boards/owner/${userId}`)
+  return response.data
+}
+
 export const createNewColumn = async (data) => {
   // console.log(data.boardId, data.title)
   const request = await axios.post(`${API_ROOT}/v1/lists`, {
@@ -56,5 +61,10 @@ export const updateCard = async (id, data) => {
   const request = await axios.put(`${API_ROOT}/v1/cards/${id}`, data);
   return request.data;
 };
+
+export const findUsernameById = async (id) => {
+  const response = await axios.get(`${API_ROOT}/v1/auth/${id}`)
+  return response.data
+}
 
 export { auth };
