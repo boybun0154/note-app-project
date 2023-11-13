@@ -13,9 +13,11 @@ import { Chip, SvgIcon, Tooltip } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { useNavigate } from "react-router-dom";
 
 export default function SwipeableTemporaryDrawer({ boardByUserId }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -76,7 +78,7 @@ export default function SwipeableTemporaryDrawer({ boardByUserId }) {
             key={board._id}
             icon={<DashboardIcon />}
             label={board.title}
-            clickable
+            onClick={() => navigate(`/boards/${board._id}`)}
             sx={{
               display: "flex",
               alignItems: "center",
