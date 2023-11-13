@@ -47,7 +47,7 @@ function Board() {
     return () => {
       // Cleanup or cancellation logic (if needed)...
     };
-  }, []);
+  }, [boardId]);
 
   return (
     <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
