@@ -44,8 +44,8 @@ function Appbar({ boardByUserId }) {
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
         <SwipeableTemporaryDrawer boardByUserId={boardByUserId} />
         <Box component='a' href='/' sx={{ display: 'flex', alignItems: 'center', gap: 0.5, textDecoration: 'none' }}>
-          <SvgIcon component={TrelloIcon} fontSize="small" inheritViewBox sx={{ color: 'white' }} />
-          <Typography variant="span" sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'white' }}>Trolle</Typography>
+          <SvgIcon component={TrelloIcon} fontSize="small" inheritViewBox sx={{ color: 'black' }} />
+          <Typography variant="span" sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'black' }}>Trolle</Typography>
         </Box>
 
         <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>

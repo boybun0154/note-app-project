@@ -19,7 +19,7 @@ export default function SwipeableTemporaryDrawer({ boardByUserId }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
-  const navigate = useNavigate();
+  
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
