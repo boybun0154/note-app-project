@@ -22,7 +22,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
   marginTop: 12,
   "&:hover": {
-    backgroundColor: "#303842",
+    backgroundColor: "gray",
   },
   cursor: "pointer"
 }));
