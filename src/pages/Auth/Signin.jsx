@@ -64,7 +64,7 @@ export default function SignIn() {
     const errors = validate(username, password);
     setErrors(errors);
   }, [username, password, validate]);
-
+  const tempBoardId = '654f462cbae839768f802f92'
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (Object.keys(errors).length === 0) {
@@ -78,7 +78,7 @@ export default function SignIn() {
       if (responseData.isSuccess) {
         authHelper.setJwtToken(responseData.accessToken);
         authHelper.setCurrentUserId(responseData.id);
-        navigate(`/boards/`);
+        navigate(`/boards/${tempBoardId}`);
       }
     }
   };
