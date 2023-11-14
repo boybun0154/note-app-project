@@ -25,7 +25,7 @@ const MENU_STYLES = {
   },
 };
 
-function BoardBar({ board }) {
+function BoardBar({ board, setBoard }) {
   return (
     <Box
       sx={{
@@ -68,7 +68,7 @@ function BoardBar({ board }) {
           label="Automation"
           clickable
         />
-        <Filters board={board} />
+        <Filters board={board} setBoard= {setBoard} />
       </Box>
 
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>

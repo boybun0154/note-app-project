@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function SwipeableTemporaryDrawer({ boardByUserId }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
 
@@ -81,29 +82,24 @@ export default function SwipeableTemporaryDrawer({ boardByUserId }) {
         Your boards
       </h4>
       {Array.isArray(boardByUserId) && boardByUserId.length > 0 ? (
-        boardByUserId.map(
-          (board) =>
-            (
-              /* eslint-disable */
-              console.log("board_.id", board._id),
-              (
-                <Chip
-                  key={board._id}
-                  icon={<DashboardIcon />}
-                  label={board.title}
-                  onClick={() => navigateToBoard(board._id)}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: "80%",
-                    ml: 2,
-                    m: 2,
-                  }}
-                />
-              )
-            )
-        )
+
+        boardByUserId.map((board) => (
+          <Chip
+            key={board._id}
+            icon={<DashboardIcon />}
+            label={board.title}
+            onClick={() => navigate(`/boards/${board._id}`)}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "80%",
+              ml: 2,
+              m: 2,
+            }}
+          />
+        ))
+
       ) : (
         <p>No boards available</p>
       )}

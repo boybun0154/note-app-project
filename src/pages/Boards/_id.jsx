@@ -47,13 +47,14 @@ function Board() {
     return () => {
       // Cleanup or cancellation logic (if needed)...
     };
-  }, []);
+  }, [boardId]);
 
   return (
-    <Container disableGutters maxWidth={false} sx={{ height: "100vh" }}>
-      <Appbar boardByUserId={boardByUserId} />
-      <BoardBar board={board} />
-      <BoardContent board={board} onBoardChange={handleBoardChange} />
+
+    <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
+      <Appbar boardByUserId = {boardByUserId}/>
+      <BoardBar board = {board} setBoard = {setBoard}/>
+      <BoardContent board = {board} onBoardChange={handleBoardChange} />
     </Container>
   );
 }

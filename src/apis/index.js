@@ -4,7 +4,6 @@ import { auth } from "./auth";
 import { auth as authHelper } from "../helpers/index";
 
 export const createNewBoard = async (data) => {
-  console.log("data", data);
   const response = await axios.post(`${API_ROOT}/v1/boards`, {
     title: data.title,
     description: data.description,
@@ -61,5 +60,24 @@ export const updateCard = async (id, data) => {
   const request = await axios.put(`${API_ROOT}/v1/cards/${id}`, data);
   return request.data;
 };
+
+export const findUsernameById = async (id) => {
+  const response = await axios.get(`${API_ROOT}/v1/auth/${id}`)
+  return response.data
+}
+
+/**
+ * 
+ * @param {string} id
+ * @returns {Promise<string[]>} boards
+ */
+export const getBoardsIdByUserId = async (id) => {
+  const response = await axios.post(
+    `${API_ROOT}/v1/boards/user/`,
+    { id },
+    authHelper.getHeader()
+  );
+  return response.data;
+}
 
 export { auth };
