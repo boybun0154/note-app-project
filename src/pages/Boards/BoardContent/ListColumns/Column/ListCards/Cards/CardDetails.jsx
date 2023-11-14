@@ -8,8 +8,10 @@ import {
   Icon,
   Stack,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
+import List from "@mui/material/List";
 import Popper from "@mui/material/Popper";
 import SubtitlesIcon from "@mui/icons-material/Subtitles";
 import DescriptionIcon from "@mui/icons-material/Description";
@@ -20,6 +22,7 @@ import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import TodayIcon from "@mui/icons-material/Today";
 import PanoramaIcon from "@mui/icons-material/Panorama";
 function CardDetails({ isOpen, onClose, card }) {
+  console.log("member", card.memberIds);
   return (
     <ClickAwayListener onClickAway={onClose}>
       <Popper open={isOpen}>
@@ -48,7 +51,12 @@ function CardDetails({ isOpen, onClose, card }) {
               }}
             >
               <SubtitlesIcon sx={{ mr: 1 }} />
-              {card.title}
+              <Box>
+                {card.title}
+                <Typography variant="body2" color="textSecondary">
+                  Created at: {new Date(card.createdAt).toLocaleDateString()}
+                </Typography>
+              </Box>
             </Box>
             {/* Card Main Details */}
             <Box>
@@ -65,7 +73,8 @@ function CardDetails({ isOpen, onClose, card }) {
                   <Typography variant="subtitle2" gutterBottom>
                     Description
                   </Typography>
-                  <TextField fullWidth label="More Details" id="fullWidth" />
+                  <Box>{card.description}</Box>
+                  <TextField fullWidth label="More Details" id="fullWidth" >{card.description}</TextField>
                 </Box>
               </Box>
               {/* Activity */}
@@ -94,6 +103,33 @@ function CardDetails({ isOpen, onClose, card }) {
                     id="fullWidth"
                     sx={{ mt: 1 }}
                   />
+                  <Box sx={{ mt: 2, ml: 2 }}>
+                    {card.comments.map((comment) => (
+                      <Box key={comment.createdAt} sx={{ mb: 1 }}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                          }}
+                        >
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            fontWeight="bold"
+                            sx={{ mr: "10px" }}
+                          >
+                            @{comment.userId}
+                          </Typography>
+                          <Typography variant="body2" color="textSecondary">
+                            {new Date(comment.createdAt).toLocaleDateString()}
+                          </Typography>
+                        </Box>
+                        <Typography variant="body2" color="textSecondary">
+                          {comment.content}
+                        </Typography>
+                      </Box>
+                    ))}
+                  </Box>
                 </Box>
               </Box>
             </Box>
@@ -106,16 +142,24 @@ function CardDetails({ isOpen, onClose, card }) {
                 alignItems: "center",
               }}
             >
-              <Chip
-                icon={<PersonIcon />}
-                clickable
-                sx={{
-                  bgcolor: (theme) =>
-                    theme.palette.mode === "dark" ? "#333643" : "#ebecf0",
-                  mr: 1, // Margin right to create space between Chip and Typography
-                }}
-              />
-              <Typography>Member{card.membersId}</Typography>
+              <Tooltip title={`${card.memberIds.length} members`}>
+                <Chip
+                  icon={<PersonIcon />}
+                  clickable
+                  sx={{
+                    bgcolor: (theme) =>
+                      theme.palette.mode === "dark" ? "#333643" : "#ebecf0",
+                    mr: 1, // Margin right to create space between Chip and Typography
+                  }}
+                />
+              </Tooltip>
+              <Typography>Member</Typography>
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                fontWeight="bold"
+                sx={{ mr: "10px" }}
+              ></Typography>
             </Box>
 
             <Box

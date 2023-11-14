@@ -20,9 +20,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import SwipeableTemporaryDrawer from "../Drawer/Drawer";
 import Create from "./Menus/Create";
 
-function Appbar({ board }) {
+function Appbar({ boardByUserId }) {
   const [searchValue, setSearchValue] = useState("");
-  console.log("boards in Appbar: ", board);
 
   return (
     <Box
@@ -36,21 +35,33 @@ function Appbar({ board }) {
         paddingX: 2,
         overflowX: "auto",
         bgcolor: (theme) =>
-          theme.palette.mode === "dark" ? "#2c3e50" : "#1565c0",
+          theme.palette.mode === "dark" ? "#2c3e50" : "#fffff",
+        borderBottomWidth: "1px",
+        borderBottomStyle: "solid",
+        borderBottomColor: "hsla(218,54%,19.6%,0.16)",
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-        <SwipeableTemporaryDrawer boards={board} />
-        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+        <SwipeableTemporaryDrawer boardByUserId={boardByUserId} />
+        <Box
+          component="a"
+          href="/"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 0.5,
+            textDecoration: "none",
+          }}
+        >
           <SvgIcon
             component={TrelloIcon}
             fontSize="small"
             inheritViewBox
-            sx={{ color: "white" }}
+            sx={{ color: "black" }}
           />
           <Typography
             variant="span"
-            sx={{ fontSize: "1.2rem", fontWeight: "bold", color: "white" }}
+            sx={{ fontSize: "1.2rem", fontWeight: "bold", color: "black" }}
           >
             Trolle
           </Typography>
@@ -76,7 +87,7 @@ function Appbar({ board }) {
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon sx={{ color: "white" }} />
+                <SearchIcon sx={{ color: "black" }} />
               </InputAdornment>
             ),
             endAdornment: (
@@ -84,7 +95,7 @@ function Appbar({ board }) {
                 <CloseIcon
                   fontSize="small"
                   sx={{
-                    color: "white",
+                    color: "black",
                     cursor: "pointer",
                     display: searchValue ? "block" : "none",
                   }}
@@ -96,13 +107,13 @@ function Appbar({ board }) {
           sx={{
             minWidth: "120px",
             maxWidth: "180px",
-            "& label": { color: "white" },
-            "& input": { color: "white" },
-            "& label.Mui-focused": { color: "white" },
+            "& label": { color: "black" },
+            "& input": { color: "black" },
+            "& label.Mui-focused": { color: "black" },
             "& .MuiOutlinedInput-root": {
-              "& fieldset": { borderColor: "white" },
-              "&:hover fieldset": { borderColor: "white" },
-              "&.Mui-focused fieldset": { borderColor: "white" },
+              "& fieldset": { borderColor: "black" },
+              "&:hover fieldset": { borderColor: "black" },
+              "&.Mui-focused fieldset": { borderColor: "black" },
             },
           }}
         />
@@ -110,12 +121,12 @@ function Appbar({ board }) {
 
         <Tooltip title="Notifications">
           <Badge color="warning" variant="dot" sx={{ cursor: "pointer" }}>
-            <NotificationsNoneIcon sx={{ color: "white" }} />
+            <NotificationsNoneIcon sx={{ color: "black" }} />
           </Badge>
         </Tooltip>
 
         <Tooltip title="Help">
-          <HelpOutlineIcon sx={{ cursor: "pointer", color: "white" }} />
+          <HelpOutlineIcon sx={{ cursor: "pointer", color: "black" }} />
         </Tooltip>
 
         <Profiles />
