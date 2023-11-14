@@ -13,8 +13,10 @@ import { Chip, SvgIcon, Tooltip } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { useNavigate } from "react-router-dom";
 
-export default function SwipeableTemporaryDrawer({ boardByUserId }) {
+export default function SwipeableTemporaryDrawer({ boardByUserId, handleBoardChange }) {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -71,24 +73,32 @@ export default function SwipeableTemporaryDrawer({ boardByUserId }) {
         Your boards
       </h4>
       {Array.isArray(boardByUserId) && boardByUserId.length > 0 ? (
-        boardByUserId.map((board) => (
-          <Chip
-            key={board._id}
-            icon={<DashboardIcon />}
-            label={board.title}
-            clickable
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "80%",
-              ml: 2,
-            }}
-          />
-        ))
+        boardByUserId.map((board) => {
+          console.log('Board ID:', board._id); // Log board._id
+          return (
+            <Chip
+              key={board._id}
+              icon={<DashboardIcon />}
+              label={board.title}
+              clickable
+              onClick={() => {
+                navigate(`/boards/${board._id}`);
+                window.location.reload();
+              }}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "80%",
+                ml: 2,
+              }}
+            />
+          );
+        })
       ) : (
         <p>No boards available</p>
       )}
+
     </Box>
   )
   return (

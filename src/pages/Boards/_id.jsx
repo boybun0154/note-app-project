@@ -5,14 +5,13 @@ import BoardContent from './BoardContent/BoardContent'
 // import { mockData } from '~/apis/mock-data'
 import { fetchBoardDetailsAPI, fetchBoardByUserIdDetailsAPI } from '~/apis'
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 
 function Board() {
   const [board, setBoard] = useState('')
   const [boardByUserId, setBoardByUserId] = useState('')
   let { boardId } = useParams()
-  // const boardId = '654a2bd9ba34f2d67a98ddcb'
-  const handleBoardChange = (newBoard) => {
+  const handleBoardChange = () => {
     fetchBoardDetailsAPI(boardId)
       .then(board => {
         // console.log('card change:', board) // Log the received board data
@@ -29,7 +28,7 @@ function Board() {
       .then(board => {
         console.log('Board data received:', board);
         setBoard(board);
-  
+
         // Second fetch - only initiated after the first fetch is successful
         return fetchBoardByUserIdDetailsAPI(board?.ownerId);
       })
@@ -43,7 +42,7 @@ function Board() {
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-  
+
     return () => {
       // Cleanup or cancellation logic (if needed)...
     };
@@ -51,9 +50,9 @@ function Board() {
 
   return (
     <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
-      <Appbar boardByUserId = {boardByUserId}/>
-      <BoardBar board = {board}/>
-      <BoardContent board = {board} onBoardChange={handleBoardChange} />
+      <Appbar boardByUserId={boardByUserId}/>
+      <BoardBar board={board} />
+      <BoardContent board={board} onBoardChange={handleBoardChange} />
     </Container>
   )
 }

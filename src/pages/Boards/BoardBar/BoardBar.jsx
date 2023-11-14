@@ -11,6 +11,7 @@ import Button from '@mui/material/Button'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import { capitalizeFirstLetter } from '~/utils/formatters'
 import Filters from './Menus/Filters'
+import { useState } from 'react'
 const MENU_STYLES = {
   color: 'white',
   bgcolor: 'transparent',
@@ -26,6 +27,8 @@ const MENU_STYLES = {
 }
 
 function BoardBar({ board }) {
+  const [openInviteForm, setOpenInviteForm] = useState(false)
+  const toggleOpenInviteForm = () => setOpenInviteForm(!openInviteForm)
   return (
     <Box
       sx={{

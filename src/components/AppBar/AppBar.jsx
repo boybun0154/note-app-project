@@ -36,7 +36,7 @@ function Appbar({ boardByUserId }) {
       bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#2c3e50' : '#1565c0')
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        <SwipeableTemporaryDrawer boardByUserId={boardByUserId} />
+        <SwipeableTemporaryDrawer boardByUserId={boardByUserId}/>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
           <SvgIcon component={TrelloIcon} fontSize="small" inheritViewBox sx={{ color: 'white' }} />
           <Typography variant="span" sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'white' }}>Trolle</Typography>
