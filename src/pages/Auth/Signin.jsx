@@ -39,26 +39,23 @@ export default function SignIn() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const validate = useCallback(
-    (username, password) => {
-      const errors = {};
+  const validate = useCallback((username, password) => {
+    const errors = {};
 
-      if (!username) {
-        errors.username = "Username is required";
-      } else if (username.length < 5) {
-        errors.username = "Username must be 5 characters or more";
-      }
+    if (!username) {
+      errors.username = "Username is required";
+    } else if (username.length < 5) {
+      errors.username = "Username must be 5 characters or more";
+    }
 
-      if (!password) {
-        errors.password = "Password is required";
-      } else if (password.length < 8) {
-        errors.password = "Password must be 8 characters or more";
-      }
+    if (!password) {
+      errors.password = "Password is required";
+    } else if (password.length < 8) {
+      errors.password = "Password must be 8 characters or more";
+    }
 
-      return errors;
-    },
-    []
-  );
+    return errors;
+  }, []);
 
   useEffect(() => {
     const errors = validate(username, password);
@@ -72,7 +69,7 @@ export default function SignIn() {
       const data = new FormData(event.currentTarget);
       const user = {
         username: data.get("username"),
-        password: data.get("password")
+        password: data.get("password"),
       };
       const responseData = await auth.login(user);
       if (responseData.isSuccess) {
