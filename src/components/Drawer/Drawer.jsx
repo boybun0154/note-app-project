@@ -19,6 +19,8 @@ export default function SwipeableTemporaryDrawer({ boardByUserId }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -41,9 +43,16 @@ export default function SwipeableTemporaryDrawer({ boardByUserId }) {
     setState({ ...state, [anchor]: open });
   };
 
+  const navigateToBoard = (boardId) => {
+    navigate(`/boards/${boardId}`);
+    console.log("boardByUserId", { boardByUserId });
+  };
+
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      sx={{
+        width: anchor === "top" || anchor === "bottom" ? "auto" : 250,
+      }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
@@ -73,6 +82,7 @@ export default function SwipeableTemporaryDrawer({ boardByUserId }) {
         Your boards
       </h4>
       {Array.isArray(boardByUserId) && boardByUserId.length > 0 ? (
+
         boardByUserId.map((board) => (
           <Chip
             key={board._id}
@@ -89,19 +99,20 @@ export default function SwipeableTemporaryDrawer({ boardByUserId }) {
             }}
           />
         ))
+
       ) : (
         <p>No boards available</p>
       )}
     </Box>
   );
   return (
-    <div>
+    <Box>
       {["left"].map((anchor) => (
-        <React.Fragment key={anchor}>
+        <Box key={anchor}>
           <AppsIcon
             onClick={toggleDrawer(anchor, true)}
             sx={{
-              color: "white",
+              color: "black",
               height: "40px",
               display: "flex",
               alignItems: "center",
@@ -118,8 +129,8 @@ export default function SwipeableTemporaryDrawer({ boardByUserId }) {
           >
             {list(anchor)}
           </SwipeableDrawer>
-        </React.Fragment>
+        </Box>
       ))}
-    </div>
+    </Box>
   );
 }
