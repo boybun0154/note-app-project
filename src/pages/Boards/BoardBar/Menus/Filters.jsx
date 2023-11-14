@@ -114,60 +114,6 @@ export default function Filters({ board, setBoard }) {
             Members
           </Typography>
         </MenuItem>
-
-        <MenuItem sx={{ py: "4px" }} disableRipple>
-          <FormControlLabel
-            control={
-              <Checkbox
-                size="small"
-                checked={johndoe}
-                onChange={handleChange}
-                name="johndoe"
-              />
-            }
-            label="John Doe"
-          />
-        </MenuItem>
-        <MenuItem sx={{ py: "4px" }} disableRipple>
-          <FormControlLabel
-            control={
-              <Checkbox
-                size="small"
-                checked={janedoe}
-                onChange={handleChange}
-                name="janedoe"
-              />
-            }
-            label="Jane Doe"
-          />
-        </MenuItem>
-        <MenuItem sx={{ py: "4px" }} disableRipple>
-          <FormControlLabel
-            control={
-              <Checkbox
-                size="small"
-                checked={brucewayne}
-                onChange={handleChange}
-                name="brucewayne"
-              />
-            }
-            label="Bruce Wayne"
-          />
-        </MenuItem>
-        <MenuItem sx={{ py: "4px" }} disableRipple>
-          <FormControlLabel
-            control={
-              <Checkbox
-                size="small"
-                checked={clarkkent}
-                onChange={handleChange}
-                name="clarkkent"
-              />
-            }
-            label="Clark Kent"
-          />
-        </MenuItem>
-
         {board?.memberIds?.map(id => <FilterItem key={id} userid={id} handleChange={handleChange} />)}
 
       </Menu>
