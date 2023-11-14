@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -11,6 +12,19 @@ import Button from "@mui/material/Button";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { capitalizeFirstLetter } from "~/utils/formatters";
 import Filters from "./Menus/Filters";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { cloneDeep } from "lodash";
+import { updateBoard } from "~/apis";
+import { useNavigate } from "react-router-dom";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
+import { useState } from "react";
+
 const MENU_STYLES = {
   color: "black",
   bgcolor: "transparent",
@@ -26,6 +40,27 @@ const MENU_STYLES = {
 };
 
 function BoardBar({ board, setBoard }) {
+  const [openDialog, setOpenDialog] = useState(false);
+  const navigate = useNavigate();
+
+  function handleCloseDialog() {
+    setOpenDialog(false);
+  }
+
+  const deleteBoard = () => {
+    const destroyColumn = {
+      _destroy: "true",
+    };
+
+    updateBoard(board._id, destroyColumn).then(() => {
+      navigate(`/boards/654f462cbae839768f802f92`);
+    });
+  };
+
+  function openDeleteColumnDialog() {
+    setOpenDialog(true);
+  }
+
   return (
     <Box
       sx={{
@@ -68,7 +103,19 @@ function BoardBar({ board, setBoard }) {
           label="Automation"
           clickable
         />
-        <Filters board={board} setBoard= {setBoard} />
+        <Filters board={board} setBoard={setBoard} />
+        <Button
+          variant="outlined"
+          startIcon={<DeleteForeverIcon fontSize="small" />}
+          onClick={openDeleteColumnDialog}
+          sx={{
+            color: "black",
+            borderColor: "black",
+            "&:hover": { borderColor: "black" },
+          }}
+        >
+          Delete
+        </Button>
       </Box>
 
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
@@ -149,6 +196,32 @@ function BoardBar({ board, setBoard }) {
           </Tooltip>
         </AvatarGroup>
       </Box>
+      <Dialog open={openDialog} onClose={handleCloseDialog}>
+        <DialogTitle>
+          Are you sure you want to delete board "{board.title}"?
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Deleting this column will remove all associated cards. This action
+            cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="primary">
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              deleteBoard();
+              handleCloseDialog();
+            }}
+            color="primary"
+            variant="contained"
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

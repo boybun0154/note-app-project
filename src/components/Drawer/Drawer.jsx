@@ -20,12 +20,6 @@ export default function SwipeableTemporaryDrawer({ boardByUserId }) {
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   const [state, setState] = React.useState({
     left: false,
   });
@@ -42,10 +36,6 @@ export default function SwipeableTemporaryDrawer({ boardByUserId }) {
     setState({ ...state, [anchor]: open });
   };
 
-  const navigateToBoard = (boardId) => {
-    navigate(`/boards/${boardId}`);
-    console.log("boardByUserId", { boardByUserId });
-  };
 
   const list = (anchor) => (
     <Box
@@ -102,6 +92,7 @@ export default function SwipeableTemporaryDrawer({ boardByUserId }) {
       )}
     </Box>
   );
+
   return (
     <Box>
       {["left"].map((anchor) => (

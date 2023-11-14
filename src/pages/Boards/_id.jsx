@@ -52,7 +52,10 @@ function Board() {
   return (
     <Container disableGutters maxWidth={false} sx={{ height: "100vh" }}>
       <Appbar boardByUserId={boardByUserId} />
-      <BoardBar board={board} setBoard={setBoard} />
+      <BoardBar
+        board={board}
+        setBoard={setBoard}
+      />
       <BoardContent board={board} onBoardChange={handleBoardChange} />
     </Container>
   );
