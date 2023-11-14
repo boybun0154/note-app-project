@@ -1,38 +1,39 @@
-import Board from '~/pages/Boards/_id'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import SignIn from './pages/Auth/Signin'
-import SignUp from './pages/Auth/Signup'
-import BoardList from '~/pages/Boards/index';
+import Board from "~/pages/Boards/_id";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import SignIn from "./pages/Auth/Signin";
+import SignUp from "./pages/Auth/Signup";
+import BoardList from "~/pages/Boards/index";
+import BoardContent from "./pages/Boards/BoardContent/BoardContent";
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <SignIn />
+    path: "/",
+    element: <SignIn />,
   },
   {
-    path: '/signin',
-    element: <SignIn />
+    path: "/signin",
+    element: <SignIn />,
   },
   {
-    path: '/boards',
-    element: <BoardList />
+    path: "/boards",
+    element: <BoardList />,
   },
   {
-    path: '/boards/:boardId',
-    element: <Board />
+    path: "/boards/:boardId",
+    element: <Board />,
   },
   {
-    path: '/signup',
-    element: <SignUp />
-  }
-])
+    path: "/signup",
+    element: <SignUp />,
+  },
+]);
 
 function App() {
   return (
     <>
       <RouterProvider router={router} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
