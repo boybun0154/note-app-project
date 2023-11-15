@@ -5,6 +5,11 @@ import {
   Button,
   Chip,
   ClickAwayListener,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Icon,
   Stack,
   TextField,
@@ -21,8 +26,35 @@ import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import TodayIcon from "@mui/icons-material/Today";
 import PanoramaIcon from "@mui/icons-material/Panorama";
-function CardDetails({ isOpen, onClose, card }) {
+import { updateCard } from "~/apis";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { useNavigate } from "react-router-dom";
+
+function CardDetails({ isOpen, onClose, card, board }) {
+  const navigate = useNavigate();
   console.log("member", card.memberIds);
+
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  function handleCloseDialog() {
+    setOpenDialog(false);
+  }
+
+  const deleteCard = () => {
+    const destroyColumn = {
+      _destroy: "true",
+    };
+
+    updateCard(card._id, destroyColumn).then(() => {
+      console.log("board id ", board._id);
+      navigate(0);
+    });
+  };
+
+  function openDeleteColumnDialog() {
+    setOpenDialog(true);
+  }
+
   return (
     <ClickAwayListener onClickAway={onClose}>
       <Popper open={isOpen}>
@@ -74,7 +106,9 @@ function CardDetails({ isOpen, onClose, card }) {
                     Description
                   </Typography>
                   <Box>{card.description}</Box>
-                  <TextField fullWidth label="More Details" id="fullWidth" >{card.description}</TextField>
+                  <TextField fullWidth label="More Details" id="fullWidth">
+                    {card.description}
+                  </TextField>
                 </Box>
               </Box>
               {/* Activity */}
@@ -237,7 +271,45 @@ function CardDetails({ isOpen, onClose, card }) {
               />
               <Typography>Cover</Typography>
             </Box>
+            <Button
+              variant="outlined"
+              startIcon={<DeleteForeverIcon fontSize="small" />}
+              onClick={openDeleteColumnDialog}
+              sx={{
+                color: "black",
+                borderColor: "black",
+                "&:hover": { borderColor: "black" },
+              }}
+            >
+              Delete
+            </Button>
           </Stack>
+          <Dialog open={openDialog} onClose={handleCloseDialog}>
+            <DialogTitle>
+              Are you sure you want to delete card "{card.title}"?
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Deleting this column will remove all associated cards. This
+                action cannot be undone.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseDialog} color="primary">
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  deleteCard();
+                  handleCloseDialog();
+                }}
+                color="primary"
+                variant="contained"
+              >
+                Delete
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Box>
       </Popper>
     </ClickAwayListener>
